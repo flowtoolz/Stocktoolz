@@ -18,17 +18,29 @@ class AppDelegate: NSObject, NSApplicationDelegate
     func applicationDidFinishLaunching(_ aNotification: Notification)
     {
         //runStockToolz()
+
+        guard let mainView = window.contentView else
+        {
+            return
+        }
         
         // chart view
-        let view = ChartView()
-        window.contentView?.addSubview(view)
-        view.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero, excludingEdge: .bottom)
-        view.autoMatch(ALDimension.height,
-                       to: ALDimension.height,
-                       of: window.contentView!,
-                       withMultiplier: 0.75)
+        let chartView = ChartView()
+        mainView.addSubview(chartView)
+        chartView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero, excludingEdge: .bottom)
+        chartView.autoMatch(ALDimension.height,
+                            to: ALDimension.height,
+                            of: mainView,
+                            withMultiplier: 0.75)
         
-        //
+        // button
+        let button = NSButton()
+        button.title = "Run"
+        mainView.addSubview(button)
+        button.autoPinEdge(toSuperviewEdge: .left)
+        button.autoPinEdge(toSuperviewEdge: .bottom)
+        button.autoPinEdge(.top, to: .bottom, of: chartView)
+        button.autoMatch(.width, to: .height, of: button)
     }
     
     func runStockToolz()
