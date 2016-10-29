@@ -17,15 +17,12 @@ class AppDelegate: NSObject, NSApplicationDelegate
 
     func applicationDidFinishLaunching(_ aNotification: Notification)
     {
-        //runStockToolz()
-
         guard let mainView = window.contentView else
         {
             return
         }
         
         // chart view
-        let chartView = ChartView()
         mainView.addSubview(chartView)
         chartView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero, excludingEdge: .bottom)
         chartView.autoMatch(ALDimension.height,
@@ -33,26 +30,148 @@ class AppDelegate: NSObject, NSApplicationDelegate
                             of: mainView,
                             withMultiplier: 0.75)
         
-        // button
-        let button = NSButton()
-        button.title = "Run"
-        mainView.addSubview(button)
-        button.autoPinEdge(toSuperviewEdge: .left)
-        button.autoPinEdge(toSuperviewEdge: .bottom)
-        button.autoPinEdge(.top, to: .bottom, of: chartView)
-        button.autoMatch(.width, to: .height, of: button)
+        // load button
+        let loadButton = NSButton()
+        loadButton.title = "Load"
+        mainView.addSubview(loadButton)
+        loadButton.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
+        loadButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+        loadButton.autoPinEdge(.top, to: .bottom, of: chartView, withOffset: 10)
+        loadButton.autoMatch(.width, to: .height, of: loadButton)
+        loadButton.action = #selector(AppDelegate.loadDataButtonClicked)
+        
+        // run button
+        let runButton = NSButton()
+        runButton.title = "Run"
+        mainView.addSubview(runButton)
+        runButton.autoPinEdge(.left, to: .right, of: loadButton, withOffset: 10)
+        runButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+        runButton.autoPinEdge(.top, to: .bottom, of: chartView, withOffset: 10)
+        runButton.autoMatch(.width, to: .height, of: runButton)
+        runButton.action = #selector(AppDelegate.runButtonClicked)
+        
+        // result view
+        mainView.addSubview(resultView)
+        resultView.autoPinEdge(.left, to: .right, of: runButton, withOffset: 10)
+        resultView.autoPinEdge(.top, to: .bottom, of: chartView, withOffset: 10)
+        resultView.isBezeled = false
+        resultView.drawsBackground = false
+        resultView.isEditable = false
+        resultView.isSelectable = true
+        resultView.preferredMaxLayoutWidth = 100
+        // resultView.maximumNumberOfLines = 2
+        
+        // left buttons
+        let leftButton = NSButton()
+        leftButton.title = "<"
+        mainView.addSubview(leftButton)
+        leftButton.autoPinEdge(.left, to: .right, of: resultView, withOffset: 10)
+        leftButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+        leftButton.autoPinEdge(.top, to: .bottom, of: chartView, withOffset: 10)
+        leftButton.autoMatch(.width, to: .height, of: leftButton, withMultiplier: 0.5)
+        leftButton.action = #selector(AppDelegate.leftButtonClicked)
+        
+        // zoom in/out buttons
+        let zoomInButton = NSButton()
+        zoomInButton.title = "> <"
+        mainView.addSubview(zoomInButton)
+        zoomInButton.autoPinEdge(.left, to: .right, of: leftButton)
+        zoomInButton.autoPinEdge(.top, to: .bottom, of: chartView, withOffset: 10)
+        zoomInButton.autoMatch(.width, to: .height, of: leftButton)
+        zoomInButton.action = #selector(AppDelegate.zoomInButtonClicked)
+        
+        let zoomOutButton = NSButton()
+        zoomOutButton.title = "<   >"
+        mainView.addSubview(zoomOutButton)
+        zoomOutButton.autoPinEdge(.left, to: .right, of: leftButton)
+        zoomOutButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+        zoomOutButton.autoPinEdge(.top, to: .bottom, of: zoomInButton)
+        zoomOutButton.autoMatch(.width, to: .width, of: zoomInButton)
+        zoomOutButton.autoMatch(.height, to: .height, of: zoomInButton)
+        zoomOutButton.action = #selector(AppDelegate.zoomOutButtonClicked)
+        
+        // right buttons
+        let rightButton = NSButton()
+        rightButton.title = ">"
+        mainView.addSubview(rightButton)
+        rightButton.autoPinEdge(.left, to: .right, of: zoomInButton)
+        rightButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+        rightButton.autoPinEdge(.top, to: .bottom, of: chartView, withOffset: 10)
+        rightButton.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+        rightButton.autoMatch(.width, to: .height, of: leftButton, withMultiplier: 0.5)
+        rightButton.action = #selector(AppDelegate.rightButtonClicked)
     }
     
-    func runStockToolz()
+    func zoomInButtonClicked()
+    {
+        let model = DomainModel.sharedInstance
+        let step = (model.focusRangeOldestDay - model.focusRangeLatestDay) / 20
+        
+        DomainModel.sharedInstance.focusRangeLatestDay += step
+        DomainModel.sharedInstance.focusRangeOldestDay -= step
+        
+        chartView.redraw()
+    }
+    
+    func zoomOutButtonClicked()
+    {
+        let model = DomainModel.sharedInstance
+        let step = (model.focusRangeOldestDay - model.focusRangeLatestDay) / 20
+        
+        DomainModel.sharedInstance.focusRangeLatestDay -= step
+        DomainModel.sharedInstance.focusRangeOldestDay += step
+        
+        chartView.redraw()
+    }
+    
+    func rightButtonClicked()
+    {
+        let model = DomainModel.sharedInstance
+        let step = (model.focusRangeOldestDay - model.focusRangeLatestDay) / 20
+        
+        DomainModel.sharedInstance.focusRangeLatestDay -= step
+        DomainModel.sharedInstance.focusRangeOldestDay -= step
+        
+        chartView.redraw()
+    }
+    
+    func leftButtonClicked()
+    {
+        let model = DomainModel.sharedInstance
+        let step = (model.focusRangeOldestDay - model.focusRangeLatestDay) / 20
+        
+        DomainModel.sharedInstance.focusRangeLatestDay += step
+        DomainModel.sharedInstance.focusRangeOldestDay += step
+        
+        chartView.redraw()
+    }
+    
+    func runButtonClicked()
+    {
+        resultView.stringValue = "calculating ..."
+        
+        let test = TraderPerformanceTest()
+        
+        test.run()
+        
+        resultView.stringValue = test.resultString
+    }
+    
+    func loadDataButtonClicked()
     {
         loadDataIntoDomainModel()
         
-        //DomainModel.sharedInstance.run()
+        chartView.redraw()
     }
+    
+    var chartView = ChartView()
+    var resultView = NSTextField()
     
     func loadDataIntoDomainModel()
     {
         let model = DomainModel.sharedInstance
+        
+        model.stockExchange.stockHistoriesByTicker.removeAll()
         
         for stockGroupName in ["TecDAX"] //"DAX", , "MDAX", "SDAX"]
         {
@@ -61,7 +180,14 @@ class AppDelegate: NSObject, NSApplicationDelegate
             stockHistoryGroup.name = stockGroupName
             stockHistoryGroup.stockHistoriesByTicker = YahooCSVParser().getStockHistoriesFromDirectory(stockGroupName)
             
-            model.stockHistoryGroupsByName[stockGroupName] = stockHistoryGroup
+            // for access by group/index
+            model.stockExchange.stockHistoryGroupsByName[stockGroupName] = stockHistoryGroup
+            
+            // for access by Ticker
+            for (ticker, stockHistory) in stockHistoryGroup.stockHistoriesByTicker
+            {
+                model.stockExchange.stockHistoriesByTicker[ticker] = stockHistory
+            }
         }
     }
     
@@ -76,114 +202,5 @@ class AppDelegate: NSObject, NSApplicationDelegate
     }
 }
 
-class ChartView : NSView
-{
-    override func draw(_ dirtyRect: NSRect)
-    {
-        // background
-        NSColor.black.setFill()
-        NSRectFill(dirtyRect)
-        
-        // data
-        let model = DomainModel.sharedInstance
-        
-        if let tecDax = model.stockHistoryGroupsByName["TecDAX"]
-        {
-            // ticker
-            let tickerArray = Array(tecDax.stockHistoriesByTicker.keys)
-            let ticker = tickerArray[tickerIndex]
-        
-            // draw text
-            if let font = NSFont(name: "Helvetica Bold", size: 100.0)
-            {
-                let textFontAttributes = [NSFontAttributeName: font,
-                                          NSForegroundColorAttributeName: NSColor.darkGray]
-                
-                ticker.draw(at: NSPoint(x: 10.0, y: dirtyRect.size.height - 110.0),
-                            withAttributes: textFontAttributes)
-            }
-            
-            if let stockHistory = tecDax.stockHistoriesByTicker[ticker]
-            {
-                drawStockHistoryIntoRect(stockHistory: stockHistory, rect: dirtyRect)
-            }
-        }
-        
-        super.draw(dirtyRect)
-    }
-    
-    func drawStockHistoryIntoRect(stockHistory history: [StockDayData], rect: CGRect)
-    {
-        let maxPrice = getMaxValueFromStockHistory(stockHistory: history)
-        
-        NSColor.white.setStroke()
-        
-        let path = NSBezierPath()
-        
-        let numOfChartPoints = Int(rect.size.width)
-        
-        for chartPoint in 0..<numOfChartPoints
-        {
-            let relativeX = CGFloat(chartPoint) / CGFloat(numOfChartPoints - 1)
-            let pixelX = relativeX * rect.size.width - 1
-            
-            let numberOfDays = min(history.count, 262)
-            let firstIndex = numberOfDays - 1
-            
-            let dataIndex = firstIndex - Int(relativeX * CGFloat(numberOfDays - 1))
-            
-            if dataIndex >= history.count
-            {
-                return
-            }
-            
-            let stockDayData = history[dataIndex]
-            
-            let pixelY = CGFloat(stockDayData.close / maxPrice) * rect.size.height
-            
-            if chartPoint == 0
-            {
-                path.move(to: CGPoint(x: pixelX, y: pixelY))
-            }
-            else
-            {
-                path.line(to: CGPoint(x: pixelX, y: pixelY))
-            }
-        }
-        
-        path.stroke()
-    }
-    
-    func getMaxValueFromStockHistory(stockHistory history: [StockDayData]) -> Double
-    {
-        var max = 0.0
-        
-        for stockDayData in history
-        {
-            if stockDayData.close > max
-            {
-                max = stockDayData.close
-            }
-        }
-        
-        return max
-    }
-    
-    override var acceptsFirstResponder: Bool
-    {
-        get
-        {
-            return true
-        }
-    }
-    
-    override func mouseDown(with event: NSEvent)
-    {
-        tickerIndex += 1
-        tickerIndex = tickerIndex % 30
-        setNeedsDisplay(self.frame)
-    }
-    
-    var tickerIndex = 0
-}
+
 

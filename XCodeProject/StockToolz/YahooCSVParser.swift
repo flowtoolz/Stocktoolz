@@ -18,6 +18,12 @@ class YahooCSVParser
         
         for ticker in tickers
         {
+            // these data sets are damaged, compare degiro with yahoo finance and app ...
+            if ["DBAN.DE", "AIR.DE", "SRT3.DE"].contains(ticker)
+            {
+                continue
+            }
+            
             let stockHistory = getStockDayDataFromFile(directoryName + "/" + ticker + ".txt")
             
             stockHistoriesByTicker[ticker] = stockHistory

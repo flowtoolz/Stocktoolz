@@ -16,6 +16,12 @@
 		9E6EEFA71DC20B3300C228D0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E6EEFA51DC20B3300C228D0 /* MainMenu.xib */; };
 		9E6EEFB21DC20B3300C228D0 /* StockToolzTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6EEFB11DC20B3300C228D0 /* StockToolzTests.swift */; };
 		9E6EEFBD1DC20BCE00C228D0 /* YahooCSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6EEFBC1DC20BCE00C228D0 /* YahooCSVParser.swift */; };
+		9EEA20111DC4CDB1008EB358 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEA20101DC4CDB1008EB358 /* ChartView.swift */; };
+		9EEA20131DC53A31008EB358 /* Trader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEA20121DC53A31008EB358 /* Trader.swift */; };
+		9EEA20151DC53F0C008EB358 /* StockExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEA20141DC53F0C008EB358 /* StockExchange.swift */; };
+		9EEA20171DC55A18008EB358 /* Depot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEA20161DC55A18008EB358 /* Depot.swift */; };
+		9EEA20191DC55D06008EB358 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEA20181DC55D06008EB358 /* Statistics.swift */; };
+		9EEA201B1DC55E02008EB358 /* TraderPerformanceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEA201A1DC55E02008EB358 /* TraderPerformanceTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +50,12 @@
 		9E6EEFB11DC20B3300C228D0 /* StockToolzTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockToolzTests.swift; sourceTree = "<group>"; };
 		9E6EEFB31DC20B3300C228D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E6EEFBC1DC20BCE00C228D0 /* YahooCSVParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YahooCSVParser.swift; path = StockToolz/YahooCSVParser.swift; sourceTree = "<group>"; };
+		9EEA20101DC4CDB1008EB358 /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartView.swift; path = StockToolz/ChartView.swift; sourceTree = "<group>"; };
+		9EEA20121DC53A31008EB358 /* Trader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trader.swift; sourceTree = "<group>"; };
+		9EEA20141DC53F0C008EB358 /* StockExchange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StockExchange.swift; path = StockToolz/StockExchange.swift; sourceTree = "<group>"; };
+		9EEA20161DC55A18008EB358 /* Depot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Depot.swift; path = StockToolz/Depot.swift; sourceTree = "<group>"; };
+		9EEA20181DC55D06008EB358 /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Statistics.swift; path = StockToolz/Statistics.swift; sourceTree = "<group>"; };
+		9EEA201A1DC55E02008EB358 /* TraderPerformanceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderPerformanceTest.swift; path = StockToolz/TraderPerformanceTest.swift; sourceTree = "<group>"; };
 		B89500D3C60ABAC4B42A86D5 /* Pods-StockToolzTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockToolzTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StockToolzTests/Pods-StockToolzTests.release.xcconfig"; sourceTree = "<group>"; };
 		F4AB1FDD77D1FB5783794635 /* Pods_StockToolz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StockToolz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -72,9 +84,15 @@
 			isa = PBXGroup;
 			children = (
 				9E6EEFA11DC20B3300C228D0 /* AppDelegate.swift */,
+				9EEA20101DC4CDB1008EB358 /* ChartView.swift */,
 				9E0054991DC28AE800C784AF /* YahooCSVCrawler.swift */,
 				9E6EEFBC1DC20BCE00C228D0 /* YahooCSVParser.swift */,
 				9E0054961DC28A3600C784AF /* DomainModel.swift */,
+				9EEA20121DC53A31008EB358 /* Trader.swift */,
+				9EEA20141DC53F0C008EB358 /* StockExchange.swift */,
+				9EEA20161DC55A18008EB358 /* Depot.swift */,
+				9EEA20181DC55D06008EB358 /* Statistics.swift */,
+				9EEA201A1DC55E02008EB358 /* TraderPerformanceTest.swift */,
 			);
 			name = Code;
 			sourceTree = "<group>";
@@ -343,8 +361,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E6EEFBD1DC20BCE00C228D0 /* YahooCSVParser.swift in Sources */,
+				9EEA201B1DC55E02008EB358 /* TraderPerformanceTest.swift in Sources */,
+				9EEA20131DC53A31008EB358 /* Trader.swift in Sources */,
+				9EEA20171DC55A18008EB358 /* Depot.swift in Sources */,
 				9E00549A1DC28AE800C784AF /* YahooCSVCrawler.swift in Sources */,
 				9E6EEFA21DC20B3300C228D0 /* AppDelegate.swift in Sources */,
+				9EEA20111DC4CDB1008EB358 /* ChartView.swift in Sources */,
+				9EEA20151DC53F0C008EB358 /* StockExchange.swift in Sources */,
+				9EEA20191DC55D06008EB358 /* Statistics.swift in Sources */,
 				9E0054971DC28A3600C784AF /* DomainModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
