@@ -10,6 +10,8 @@
 		34E40249BDC5BB6E384FC9B4 /* Pods_StockToolz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AB1FDD77D1FB5783794635 /* Pods_StockToolz.framework */; };
 		70956189D82E0931BC7077A7 /* Pods_StockToolzTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F63F47D0051F5E865883E8 /* Pods_StockToolzTests.framework */; };
 		9E00549A1DC28AE800C784AF /* YahooCSVCrawler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0054991DC28AE800C784AF /* YahooCSVCrawler.swift */; };
+		9E6B493A1DC56B60005A5848 /* LazyTrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6B49391DC56B60005A5848 /* LazyTrader.swift */; };
+		9E6B493C1DC56B90005A5848 /* StupidTrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6B493B1DC56B90005A5848 /* StupidTrader.swift */; };
 		9E6EEFA21DC20B3300C228D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6EEFA11DC20B3300C228D0 /* AppDelegate.swift */; };
 		9E6EEFA41DC20B3300C228D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E6EEFA31DC20B3300C228D0 /* Assets.xcassets */; };
 		9E6EEFA71DC20B3300C228D0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E6EEFA51DC20B3300C228D0 /* MainMenu.xib */; };
@@ -39,6 +41,8 @@
 		693E02738741539BA800D167 /* Pods-StockToolz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockToolz.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StockToolz/Pods-StockToolz.debug.xcconfig"; sourceTree = "<group>"; };
 		7769AF78642DAE3059ADF7AD /* Pods-StockToolz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockToolz.release.xcconfig"; path = "Pods/Target Support Files/Pods-StockToolz/Pods-StockToolz.release.xcconfig"; sourceTree = "<group>"; };
 		9E0054991DC28AE800C784AF /* YahooCSVCrawler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YahooCSVCrawler.swift; path = StockToolz/YahooCSVCrawler.swift; sourceTree = "<group>"; };
+		9E6B49391DC56B60005A5848 /* LazyTrader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LazyTrader.swift; path = StockToolz/LazyTrader.swift; sourceTree = "<group>"; };
+		9E6B493B1DC56B90005A5848 /* StupidTrader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StupidTrader.swift; path = StockToolz/StupidTrader.swift; sourceTree = "<group>"; };
 		9E6EEF9E1DC20B3300C228D0 /* StockToolz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockToolz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E6EEFA11DC20B3300C228D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = StockToolz/AppDelegate.swift; sourceTree = "<group>"; };
 		9E6EEFA31DC20B3300C228D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,7 +104,6 @@
 		9E6B49311DC566AB005A5848 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9EEA201A1DC55E02008EB358 /* TraderPerformanceTest.swift */,
 				9EEA20121DC53A31008EB358 /* Trader.swift */,
 				9EEA20181DC55D06008EB358 /* Statistics.swift */,
 				9EEA20161DC55A18008EB358 /* Depot.swift */,
@@ -162,6 +165,9 @@
 		9E6B49381DC56841005A5848 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9EEA201A1DC55E02008EB358 /* TraderPerformanceTest.swift */,
+				9E6B493B1DC56B90005A5848 /* StupidTrader.swift */,
+				9E6B49391DC56B60005A5848 /* LazyTrader.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -438,6 +444,8 @@
 				9EEA20111DC4CDB1008EB358 /* ChartView.swift in Sources */,
 				9EEA20151DC53F0C008EB358 /* StockExchange.swift in Sources */,
 				9EEA20191DC55D06008EB358 /* Statistics.swift in Sources */,
+				9E6B493C1DC56B90005A5848 /* StupidTrader.swift in Sources */,
+				9E6B493A1DC56B60005A5848 /* LazyTrader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
