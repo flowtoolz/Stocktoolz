@@ -1,0 +1,6 @@
+framework module Pods_StockToolz {
+  umbrella header "Pods-StockToolz-umbrella.h"
+
+  export *
+  module * { export * }
+}
