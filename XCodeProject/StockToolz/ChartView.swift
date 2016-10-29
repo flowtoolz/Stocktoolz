@@ -20,9 +20,7 @@ class ChartView : NSView
         NSRectFill(dirtyRect)
         
         // data
-        let model = DomainModel.sharedInstance
-        
-        if let tecDax = model.stockExchange.stockHistoryGroupsByName["TecDAX"]
+        if let tecDax = StockExchange.sharedInstance.stockHistoryGroupsByName["TecDAX"]
         {
             // ticker
             let tickerArray = Array(tecDax.stockHistoriesByTicker.keys)
@@ -49,8 +47,8 @@ class ChartView : NSView
             {
                 drawStockHistoryIntoRect(stockHistory: stockHistory,
                                          rect: dirtyRect,
-                                         oldestDayIndex: model.focusRangeOldestDay,
-                                         latestDayIndex: model.focusRangeLatestDay)
+                                         oldestDayIndex: StockExchange.sharedInstance.focusRangeOldestDay,
+                                         latestDayIndex: StockExchange.sharedInstance.focusRangeLatestDay)
             }
         }
     }

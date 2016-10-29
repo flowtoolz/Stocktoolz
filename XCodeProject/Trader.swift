@@ -58,7 +58,7 @@ class Trader
                toNewestDayIndex newestDay: Int,
                depot: Depot) -> Bool
     {
-        guard let history = DomainModel.sharedInstance.stockExchange.stockHistoriesByTicker[depot.ticker] else
+        guard let history = StockExchange.sharedInstance.stockHistoriesByTicker[depot.ticker] else
         {
             return false
         }

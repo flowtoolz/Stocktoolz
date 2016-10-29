@@ -104,44 +104,44 @@ class AppDelegate: NSObject, NSApplicationDelegate
     
     func zoomInButtonClicked()
     {
-        let model = DomainModel.sharedInstance
-        let step = (model.focusRangeOldestDay - model.focusRangeLatestDay) / 20
+        let exchange = StockExchange.sharedInstance
+        let step = (exchange.focusRangeOldestDay - exchange.focusRangeLatestDay) / 20
         
-        DomainModel.sharedInstance.focusRangeLatestDay += step
-        DomainModel.sharedInstance.focusRangeOldestDay -= step
+        exchange.focusRangeLatestDay += step
+        exchange.focusRangeOldestDay -= step
         
         chartView.redraw()
     }
     
     func zoomOutButtonClicked()
     {
-        let model = DomainModel.sharedInstance
-        let step = (model.focusRangeOldestDay - model.focusRangeLatestDay) / 20
+        let exchange = StockExchange.sharedInstance
+        let step = (exchange.focusRangeOldestDay - exchange.focusRangeLatestDay) / 20
         
-        DomainModel.sharedInstance.focusRangeLatestDay -= step
-        DomainModel.sharedInstance.focusRangeOldestDay += step
+        exchange.focusRangeLatestDay -= step
+        exchange.focusRangeOldestDay += step
         
         chartView.redraw()
     }
     
     func rightButtonClicked()
     {
-        let model = DomainModel.sharedInstance
-        let step = (model.focusRangeOldestDay - model.focusRangeLatestDay) / 20
+        let exchange = StockExchange.sharedInstance
+        let step = (exchange.focusRangeOldestDay - exchange.focusRangeLatestDay) / 20
         
-        DomainModel.sharedInstance.focusRangeLatestDay -= step
-        DomainModel.sharedInstance.focusRangeOldestDay -= step
+        exchange.focusRangeLatestDay -= step
+        exchange.focusRangeOldestDay -= step
         
         chartView.redraw()
     }
     
     func leftButtonClicked()
     {
-        let model = DomainModel.sharedInstance
-        let step = (model.focusRangeOldestDay - model.focusRangeLatestDay) / 20
+        let exchange = StockExchange.sharedInstance
+        let step = (exchange.focusRangeOldestDay - exchange.focusRangeLatestDay) / 20
         
-        DomainModel.sharedInstance.focusRangeLatestDay += step
-        DomainModel.sharedInstance.focusRangeOldestDay += step
+        exchange.focusRangeLatestDay += step
+        exchange.focusRangeOldestDay += step
         
         chartView.redraw()
     }
@@ -169,9 +169,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
     
     func loadDataIntoDomainModel()
     {
-        let model = DomainModel.sharedInstance
-        
-        model.stockExchange.stockHistoriesByTicker.removeAll()
+        StockExchange.sharedInstance.stockHistoriesByTicker.removeAll()
         
         for stockGroupName in ["TecDAX"] //"DAX", , "MDAX", "SDAX"]
         {
@@ -181,12 +179,12 @@ class AppDelegate: NSObject, NSApplicationDelegate
             stockHistoryGroup.stockHistoriesByTicker = YahooCSVParser().getStockHistoriesFromDirectory(stockGroupName)
             
             // for access by group/index
-            model.stockExchange.stockHistoryGroupsByName[stockGroupName] = stockHistoryGroup
+            StockExchange.sharedInstance.stockHistoryGroupsByName[stockGroupName] = stockHistoryGroup
             
             // for access by Ticker
             for (ticker, stockHistory) in stockHistoryGroup.stockHistoriesByTicker
             {
-                model.stockExchange.stockHistoriesByTicker[ticker] = stockHistory
+                StockExchange.sharedInstance.stockHistoriesByTicker[ticker] = stockHistory
             }
         }
     }

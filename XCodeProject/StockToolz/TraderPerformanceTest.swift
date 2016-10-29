@@ -18,9 +18,7 @@ class TraderPerformanceTest
         var numOfHistoriesTraded = [0, 0]
         var sumOfInconsistencies = [0.0, 0.0]
         
-        let model = DomainModel.sharedInstance
-        
-        for ticker in model.stockExchange.stockHistoriesByTicker.keys
+        for ticker in StockExchange.sharedInstance.stockHistoriesByTicker.keys
         {
             var lazyPerformance = PerformanceMetrics()
             var stupidPerformance = PerformanceMetrics()
@@ -34,8 +32,8 @@ class TraderPerformanceTest
                 
                 let trader = traders[i]
                 
-                if trader.trade(fromOldestDayIndex: focusRangeOldestDay,
-                                toNewestDayIndex: focusRangeLatestDay,
+                if trader.trade(fromOldestDayIndex: StockExchange.sharedInstance.focusRangeOldestDay,
+                                toNewestDayIndex: StockExchange.sharedInstance.focusRangeLatestDay,
                                 depot: depot)
                 {
                     let performance = PerformanceMetrics(withValueHistory: depot.depotValueRecord)

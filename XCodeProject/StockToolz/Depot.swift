@@ -12,7 +12,7 @@ class Depot
 {
     func value(_ dayIndex: Int) -> Double?
     {
-        guard let stockHistory = DomainModel.sharedInstance.stockExchange.stockHistoriesByTicker[ticker] else
+        guard let stockHistory = StockExchange.sharedInstance.stockHistoriesByTicker[ticker] else
         {
             return nil
         }
@@ -26,7 +26,7 @@ class Depot
     
     func buy(_ dayIndex: Int, onMarketOpening: Bool)
     {
-        guard let stockHistory = DomainModel.sharedInstance.stockExchange.stockHistoriesByTicker[ticker] else
+        guard let stockHistory = StockExchange.sharedInstance.stockHistoriesByTicker[ticker] else
         {
             return
         }
@@ -39,7 +39,7 @@ class Depot
     
     func sell(_ dayIndex: Int, onMarketOpening: Bool)
     {
-        guard let stockHistory = DomainModel.sharedInstance.stockExchange.stockHistoriesByTicker[ticker] else
+        guard let stockHistory = StockExchange.sharedInstance.stockHistoriesByTicker[ticker] else
         {
             return
         }

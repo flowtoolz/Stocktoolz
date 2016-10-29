@@ -8,10 +8,30 @@
 
 import Foundation
 
-class StockExchange
+class StockExchange : NSObject
 {
+    // MARK: Singleton Access & Initialization
+    
+    public static let sharedInstance = StockExchange()
+    
+    override private init()
+    {
+        super.init()
+        
+        initialize()
+    }
+    
+    private func initialize()
+    {
+        
+    }
+    
+    // data
     var stockHistoriesByTicker: [String : [StockDayData]] = [:]
     var stockHistoryGroupsByName: [String : StockHistoryGroup] = [:] // indices
+    
+    var focusRangeLatestDay = 0
+    var focusRangeOldestDay = 261
 }
 
 struct StockHistoryGroup
