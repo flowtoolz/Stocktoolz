@@ -21,24 +21,24 @@ class StockExchange : NSObject
         initialize()
     }
     
-    private func initialize()
+    private func initialize() {}
+    
+    // MARK: Data
+    func removeAllData()
     {
-        
+        stockHistoriesByTicker.removeAll()
+        stockHistoryGroupsByName.removeAll()
     }
     
-    // data
     var stockHistoriesByTicker: [String : [StockDayData]] = [:]
     var stockHistoryGroupsByName: [String : StockHistoryGroup] = [:] // indices
-    
-    var focusRangeLatestDay = 0
-    var focusRangeOldestDay = 261
 }
 
 struct StockHistoryGroup
 {
     var stockHistoriesByTicker: [String : [StockDayData]] = [:]
     
-    var name = ""
+    var name = "Stock History Group Name"
 }
 
 class StockDayData
@@ -102,3 +102,5 @@ struct StockDate
     var month: Int = 0
     var day: Int = 0
 }
+
+let tradingDaysPerYear = 262

@@ -19,7 +19,7 @@ class YahooCSVParser
         for ticker in tickers
         {
             // these data sets are damaged, compare degiro with yahoo finance and app ...
-            if ["DBAN.DE", "AIR.DE", "SRT3.DE"].contains(ticker)
+            if ["DBAN.DE", "AIR.DE"].contains(ticker)
             {
                 continue
             }
@@ -140,69 +140,29 @@ class YahooCSVParser
 
         let stockDayData = StockDayData()
         
-        // date
-        let dateString = dataStrings[0]
+        stockDayData.date = StockDate(dateString: dataStrings[0])
         
-        stockDayData.date = StockDate(dateString: dateString)
-        
-        // open
-        if let open = Double(dataStrings[1])
-        {
-            stockDayData.open = open
-        }
-        else
-        {
-            print("could not read opening price")
-        }
-        
-        // max
-        if let max = Double(dataStrings[2])
-        {
-            stockDayData.max = max
-        }
-        else
-        {
-            print("could not read maximum price")
-        }
-        
-        // min
-        if let min = Double(dataStrings[3])
-        {
-            stockDayData.min = min
-        }
-        else
-        {
-            print("could not read minimum price")
-        }
-        
-        // close
-        if let close = Double(dataStrings[4])
-        {
-            stockDayData.close = close
-        }
-        else
-        {
-            print("could not read closing price")
-        }
-        
-        // volume
-        if let volume = Int64(dataStrings[5])
+        if let adjustedClose = Double(dataStrings[6]),
+            let close = Double(dataStrings[4]),
+            let open = Double(dataStrings[1]),
+            let max = Double(dataStrings[2]),
+            let min = Double(dataStrings[3]),
+            let volume = Int64(dataStrings[5])
         {
             stockDayData.volume = volume
+            stockDayData.adjustedClose = adjustedClose
+            stockDayData.close = adjustedClose
+            
+            let adjustmentFactor = adjustedClose / close
+            
+            stockDayData.open = open * adjustmentFactor
+            stockDayData.max = max * adjustmentFactor
+            stockDayData.min = min * adjustmentFactor
         }
         else
         {
-            print("could not read volume")
-        }
-        
-        // adjusted close
-        if let ac = Double(dataStrings[6])
-        {
-            stockDayData.adjustedClose = ac
-        }
-        else
-        {
-            print("could not read adjusted closing price")
+            print("could not read stock day data from CSV line: " + line)
+            return nil
         }
         
         return stockDayData

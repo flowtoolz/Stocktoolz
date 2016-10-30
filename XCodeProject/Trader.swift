@@ -10,65 +10,34 @@ import Foundation
 
 class Trader
 {
-    func trade(fromOldestDayIndex oldestDay: Int,
-               toNewestDayIndex newestDay: Int,
-               depot: Depot) -> Bool
+    func trade(onTradingDayIndex dayIndex: Int, depot: Depot) -> Bool
     {
+        // ensure we have all required data
         guard let history = StockExchange.sharedInstance.stockHistoriesByTicker[depot.ticker] else
         {
             return false
         }
         
-        stockHistory = history
-        
         let numPreviousDaysRequiredToTrade = 1
         
-        // is focus range completely out of range of given stock history?
-        if (newestDay >= stockHistory.count - numPreviousDaysRequiredToTrade) ||
-            stockHistory.count - numPreviousDaysRequiredToTrade <= newestDay
+        if dayIndex < 0 || dayIndex + numPreviousDaysRequiredToTrade >= history.count
         {
             return false
         }
         
-        let tradingStartDay = min((stockHistory.count - 1) - numPreviousDaysRequiredToTrade, oldestDay)
-        let tradingEndDay = newestDay
+        // just so derived classes don't have to get this themselves...
+        stockHistory = history
         
-        let numTradingDays = (tradingStartDay - tradingEndDay) + 1
-        
-        if numTradingDays < 1
-        {
-            return false
-        }
-        
-        for i in (tradingEndDay ... tradingStartDay).reversed()
-        {
-            if i < 0 || i >= stockHistory.count
-            {
-                continue
-            }
-            
-            tradeOnMarketOpening(i, depot: depot)
-            tradeOnMarketClosing(i, depot: depot)
-            
-            // record depot value so we can measure the over time consistency of traders
-            if let depotValue = depot.value(i)
-            {
-                depot.depotValueRecord.insert(depotValue, at: 0)
-            }
-        }
+        // do the actual trading
+        tradeOnMarketOpening(dayIndex, depot: depot)
+        tradeOnMarketClosing(dayIndex, depot: depot)
         
         return true
     }
     
-    func tradeOnMarketOpening(_ day: Int, depot: Depot)
-    {
-        
-    }
+    func tradeOnMarketOpening(_ day: Int, depot: Depot) {}
     
-    func tradeOnMarketClosing(_ day: Int, depot: Depot)
-    {
-        
-    }
+    func tradeOnMarketClosing(_ day: Int, depot: Depot) {}
     
     var stockHistory: [StockDayData] = []
 

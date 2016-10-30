@@ -26,11 +26,13 @@ class Depot
     
     func buy(_ dayIndex: Int, onMarketOpening: Bool)
     {
+        if cash == 0.0 { return }
+        
         guard let stockHistory = StockExchange.sharedInstance.stockHistoriesByTicker[ticker] else
         {
             return
         }
-        
+
         let price = onMarketOpening ? stockHistory[dayIndex].open : stockHistory[dayIndex].close
         
         shares += cash / price
@@ -39,6 +41,8 @@ class Depot
     
     func sell(_ dayIndex: Int, onMarketOpening: Bool)
     {
+        if shares == 0.0 { return }
+        
         guard let stockHistory = StockExchange.sharedInstance.stockHistoriesByTicker[ticker] else
         {
             return

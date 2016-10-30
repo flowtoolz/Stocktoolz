@@ -11,6 +11,14 @@ import Alamofire
 
 class YahooCSVCrawler
 {
+    func downloadAllHistoricStockData()
+    {
+        saveHistoricStockDataForTickerListInDirectory("DAX")
+        saveHistoricStockDataForTickerListInDirectory("TecDAX")
+        saveHistoricStockDataForTickerListInDirectory("MDAX")
+        saveHistoricStockDataForTickerListInDirectory("SDAX")
+    }
+    
     func saveHistoricStockDataForTickerListInDirectory(_ directoryName: String)
     {
         let parser = YahooCSVParser()

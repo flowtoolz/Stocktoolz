@@ -32,35 +32,40 @@ class TraderPerformanceTest
                 
                 let trader = traders[i]
                 
-                if trader.trade(fromOldestDayIndex: StockExchange.sharedInstance.focusRangeOldestDay,
-                                toNewestDayIndex: StockExchange.sharedInstance.focusRangeLatestDay,
-                                depot: depot)
+                for dayIndex in (FocusedTimeRange.sharedInstance.lastTradingDayIndex ... FocusedTimeRange.sharedInstance.firstTradingDayIndex).reversed()
                 {
-                    let performance = PerformanceMetrics(withValueHistory: depot.depotValueRecord)
-                    
-                    sumOfYearReturns[i] += performance.growthPerYear
-                    sumOfInconsistencies[i] += performance.growthInconsistency
-                    numOfHistoriesTraded[i] += 1
-                    
-                    //print(trader.name + " year return: \(performance.growthPerYear)")
-                    /*
-                     if performance.growthInconsistency < 0.03 && trader.numTradingDays > 262 * 3 && trader.name == "lazy trader"
-                     {
-                     print(groupName + " - " + ticker + ": inconsistency of: \(performance.growthInconsistency) (\(trader.name))")
-                     }
-                     */
-                    if i == 0
+                    if !trader.trade(onTradingDayIndex: dayIndex, depot: depot)
                     {
-                        stupidPerformance = performance
+                        continue
                     }
-                    else
+                    
+                    // record depot value so we can measure the over time consistency of traders
+                    if let depotValue = depot.value(dayIndex)
                     {
-                        lazyPerformance = performance
+                        depot.depotValueRecord.insert(depotValue, at: 0)
                     }
+                }
+                
+                let performance = PerformanceMetrics(withValueHistory: depot.depotValueRecord)
+                
+                sumOfYearReturns[i] += performance.growthPerYear
+                sumOfInconsistencies[i] += performance.growthInconsistency
+                numOfHistoriesTraded[i] += 1
+                
+                //print(trader.name + " year return: \(performance.growthPerYear)")
+                /*
+                 if performance.growthInconsistency < 0.03 && trader.numTradingDays > 262 * 3 && trader.name == "lazy trader"
+                 {
+                 print(groupName + " - " + ticker + ": inconsistency of: \(performance.growthInconsistency) (\(trader.name))")
+                 }
+                 */
+                if i == 0
+                {
+                    stupidPerformance = performance
                 }
                 else
                 {
-                    print("could not trade " + ticker + " in the " + " group")
+                    lazyPerformance = performance
                 }
             }
             /*
@@ -109,7 +114,7 @@ struct PerformanceMetrics
         let totalTradingDays = Double(history.count - 1)
         let totalReturn = newestValue / oldestValue
         let growthPerTradingDay = pow(totalReturn, 1.0 / totalTradingDays)
-        growthPerYear = pow(growthPerTradingDay, tradingDaysPerYear)
+        growthPerYear = pow(growthPerTradingDay, Double(tradingDaysPerYear))
         
         // inconsistency
         var sumOfDeviations = 0.0
@@ -133,5 +138,3 @@ struct PerformanceMetrics
     var growthPerYear: Double = 0.0
     var growthInconsistency: Double = 0.0
 }
-
-let tradingDaysPerYear = 262.0

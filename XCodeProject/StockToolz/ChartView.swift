@@ -18,77 +18,110 @@ class ChartView : NSView
         // background
         NSColor.black.setFill()
         NSRectFill(dirtyRect)
+    
+        // get ticker
+        let tickerArray = Array(StockExchange.sharedInstance.stockHistoriesByTicker.keys)
+        numberOfStocks = tickerArray.count
+        if numberOfStocks == 0 { return }
+        tickerIndex %= numberOfStocks
+        let ticker = tickerArray[tickerIndex]
         
-        // data
-        if let tecDax = StockExchange.sharedInstance.stockHistoryGroupsByName["TecDAX"]
+        // draw ticker symbol as text text
+        if let font = NSFont(name: "Helvetica Bold", size: 100.0)
         {
-            // ticker
-            let tickerArray = Array(tecDax.stockHistoriesByTicker.keys)
-            numberOfStocks = tickerArray.count
-            tickerIndex %= numberOfStocks
-            let ticker = tickerArray[tickerIndex]
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = NSTextAlignment.center
             
-            // draw text
-            if let font = NSFont(name: "Helvetica Bold", size: 100.0)
-            {
-                let paragraphStyle = NSMutableParagraphStyle()
-                paragraphStyle.alignment = NSTextAlignment.center
-                
-                let textFontAttributes = [NSFontAttributeName: font,
-                                          NSParagraphStyleAttributeName: paragraphStyle,
-                                          NSForegroundColorAttributeName: NSColor.init(white: 0.15, alpha: 1.0)]
-                
-                var tickerRect = dirtyRect
-                tickerRect.size.height = (dirtyRect.size.height / 2.0) + 60.0
-                ticker.draw(in: tickerRect, withAttributes: textFontAttributes)
-            }
+            let textFontAttributes = [NSFontAttributeName: font,
+                                      NSParagraphStyleAttributeName: paragraphStyle,
+                                      NSForegroundColorAttributeName: NSColor.init(white: 0.15, alpha: 1.0)]
             
-            if let stockHistory = tecDax.stockHistoriesByTicker[ticker]
-            {
-                drawStockHistoryIntoRect(stockHistory: stockHistory,
-                                         rect: dirtyRect,
-                                         oldestDayIndex: StockExchange.sharedInstance.focusRangeOldestDay,
-                                         latestDayIndex: StockExchange.sharedInstance.focusRangeLatestDay)
-            }
+            var tickerRect = dirtyRect
+            tickerRect.size.height = (dirtyRect.size.height / 2.0) + 60.0
+            ticker.draw(in: tickerRect, withAttributes: textFontAttributes)
+        }
+        
+        // draw price history chart
+        if let stockHistory = StockExchange.sharedInstance.stockHistoriesByTicker[ticker]
+        {
+            drawStockHistoryIntoRect(stockHistory: stockHistory, rect: dirtyRect)
         }
     }
     
-    func drawStockHistoryIntoRect(stockHistory history: [StockDayData], rect: CGRect,
-                                  oldestDayIndex: Int,
-                                  latestDayIndex: Int)
+    func drawStockHistoryIntoRect(stockHistory history: [StockDayData], rect: CGRect)
     {
         NSColor.white.setStroke()
         
         let path = NSBezierPath()
         
-        let statistics = statisticsForStockHistory(stockHistory: history,
-                                                   oldestDayIndex: oldestDayIndex,
-                                                   latestDayindex: latestDayIndex)
+        let statistics = statisticsForStockHistory(stockHistory: history, tradingDayRange: timeRange)
         
-        let numberOfDays = (oldestDayIndex - latestDayIndex) + 1
         var firstDataPoint = true
         
-        for dayIndex: Int in (latestDayIndex ... oldestDayIndex).reversed()
+        for dayIndex: Int in (timeRange.lastTradingDayIndex ... timeRange.firstTradingDayIndex).reversed()
         {
             if dayIndex >= history.count || dayIndex < 0
             {
                 continue
             }
 
-            let day = numberOfDays - ((dayIndex - latestDayIndex) + 1)
-            
             let stockDayData = history[dayIndex]
+            let day = timeRange.numberOfDays() - ((dayIndex - timeRange.lastTradingDayIndex) + 1)
+            let relativeX = CGFloat(day) / CGFloat(timeRange.numberOfDays() - 1)
             
-            let relativeX = CGFloat(day) / CGFloat(numberOfDays - 1)
+            // closing price
             let pixelX = relativeX * (rect.size.width - 1.0)
-            
-            let valueRange = statistics.maximum - statistics.minimum
-            let pixelY = CGFloat((stockDayData.close - statistics.minimum) / valueRange) * rect.size.height
-            
+            //let valueRange = statistics.maximum - statistics.minimum
+            //let pixelY = CGFloat((stockDayData.close - statistics.minimum) / valueRange) * rect.size.height
+            let pixelY = CGFloat(stockDayData.close / statistics.maximum) * rect.size.height
             let point = CGPoint(x: CGFloat(pixelX), y: pixelY)
             
             if firstDataPoint
             {
+                history[dayIndex].printLine()
+                firstDataPoint = false
+                path.move(to: point)
+            }
+            else
+            {
+                path.line(to: point)
+            }
+        }
+        
+        path.stroke()
+    }
+    
+    func drawVolumeHistoryIntoRect(stockHistory history: [StockDayData], rect: CGRect)
+    {
+        NSColor.white.setStroke()
+        
+        let path = NSBezierPath()
+        
+        let statistics = statisticsForStockHistory(stockHistory: history, tradingDayRange: timeRange)
+        
+        var firstDataPoint = true
+        
+        for dayIndex: Int in (timeRange.lastTradingDayIndex ... timeRange.firstTradingDayIndex).reversed()
+        {
+            if dayIndex >= history.count || dayIndex < 0
+            {
+                continue
+            }
+            
+            let stockDayData = history[dayIndex]
+            let day = timeRange.numberOfDays() - ((dayIndex - timeRange.lastTradingDayIndex) + 1)
+            let relativeX = CGFloat(day) / CGFloat(timeRange.numberOfDays() - 1)
+            
+            // closing price
+            let pixelX = relativeX * (rect.size.width - 1.0)
+            //let valueRange = statistics.maximum - statistics.minimum
+            //let pixelY = CGFloat((stockDayData.close - statistics.minimum) / valueRange) * rect.size.height
+            let pixelY = CGFloat(stockDayData.close / statistics.maximum) * rect.size.height
+            let point = CGPoint(x: CGFloat(pixelX), y: pixelY)
+            
+            if firstDataPoint
+            {
+                history[dayIndex].printLine()
                 firstDataPoint = false
                 path.move(to: point)
             }
@@ -103,6 +136,7 @@ class ChartView : NSView
     
     var tickerIndex = 0
     var numberOfStocks = 0
+    var timeRange = TradingTimeRange()
     
     override var acceptsFirstResponder: Bool
     {

@@ -9,18 +9,18 @@
 import Foundation
 
 func statisticsForStockHistory(stockHistory history: [StockDayData],
-                               oldestDayIndex: Int,
-                               latestDayindex: Int) -> Statistics
+                               tradingDayRange: TradingTimeRange) -> Statistics
 {
     var statistics = Statistics()
     
-    for i in latestDayindex ... oldestDayIndex
+    for i in tradingDayRange.lastTradingDayIndex ... tradingDayRange.firstTradingDayIndex
     {
         if i >= history.count || i < 0
         {
             continue
         }
         
+        // closing price
         let close = history[i].close
         
         if close > statistics.maximum
@@ -31,6 +31,14 @@ func statisticsForStockHistory(stockHistory history: [StockDayData],
         {
             statistics.minimum = close
         }
+        
+        // volume
+        let volume = history[i].volume
+        
+        if volume > statistics.maxVolume
+        {
+            statistics.maxVolume = volume
+        }
     }
     
     return statistics
@@ -40,4 +48,6 @@ struct Statistics
 {
     var minimum: Double = -1.0
     var maximum: Double = 0.0
+    
+    var maxVolume: Int64 = 0
 }

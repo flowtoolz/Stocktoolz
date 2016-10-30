@@ -13,9 +13,16 @@ import PureLayout
 
 class AppDelegate: NSObject, NSApplicationDelegate
 {
-    @IBOutlet weak var window: NSWindow!
-
+    // MARK: App Life Cycle
+    
     func applicationDidFinishLaunching(_ aNotification: Notification)
+    {
+        createViews()
+    }
+
+    // MARK: Views
+    
+    func createViews()
     {
         guard let mainView = window.contentView else
         {
@@ -29,6 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
                             to: ALDimension.height,
                             of: mainView,
                             withMultiplier: 0.75)
+        chartView.timeRange = FocusedTimeRange.sharedInstance
         
         // load button
         let loadButton = NSButton()
@@ -102,46 +110,32 @@ class AppDelegate: NSObject, NSApplicationDelegate
         rightButton.action = #selector(AppDelegate.rightButtonClicked)
     }
     
+    // MARK: Interaction
+    
     func zoomInButtonClicked()
     {
-        let exchange = StockExchange.sharedInstance
-        let step = (exchange.focusRangeOldestDay - exchange.focusRangeLatestDay) / 20
-        
-        exchange.focusRangeLatestDay += step
-        exchange.focusRangeOldestDay -= step
+        FocusedTimeRange.sharedInstance.zoomIn()
         
         chartView.redraw()
     }
     
     func zoomOutButtonClicked()
     {
-        let exchange = StockExchange.sharedInstance
-        let step = (exchange.focusRangeOldestDay - exchange.focusRangeLatestDay) / 20
-        
-        exchange.focusRangeLatestDay -= step
-        exchange.focusRangeOldestDay += step
+        FocusedTimeRange.sharedInstance.zoomOut()
         
         chartView.redraw()
     }
     
     func rightButtonClicked()
     {
-        let exchange = StockExchange.sharedInstance
-        let step = (exchange.focusRangeOldestDay - exchange.focusRangeLatestDay) / 20
-        
-        exchange.focusRangeLatestDay -= step
-        exchange.focusRangeOldestDay -= step
+        FocusedTimeRange.sharedInstance.shiftToFuture()
         
         chartView.redraw()
     }
     
     func leftButtonClicked()
     {
-        let exchange = StockExchange.sharedInstance
-        let step = (exchange.focusRangeOldestDay - exchange.focusRangeLatestDay) / 20
-        
-        exchange.focusRangeLatestDay += step
-        exchange.focusRangeOldestDay += step
+        FocusedTimeRange.sharedInstance.shiftToPast()
         
         chartView.redraw()
     }
@@ -159,45 +153,20 @@ class AppDelegate: NSObject, NSApplicationDelegate
     
     func loadDataButtonClicked()
     {
-        loadDataIntoDomainModel()
+        StockExchangeDataInjector.reloadStockExchangeData()
         
         chartView.redraw()
     }
     
+    func getStockDayDataFromYahoo()
+    {
+        YahooCSVCrawler().downloadAllHistoricStockData()
+    }
+
     var chartView = ChartView()
     var resultView = NSTextField()
     
-    func loadDataIntoDomainModel()
-    {
-        StockExchange.sharedInstance.stockHistoriesByTicker.removeAll()
-        
-        for stockGroupName in ["TecDAX"] //"DAX", , "MDAX", "SDAX"]
-        {
-            var stockHistoryGroup = StockHistoryGroup()
-            
-            stockHistoryGroup.name = stockGroupName
-            stockHistoryGroup.stockHistoriesByTicker = YahooCSVParser().getStockHistoriesFromDirectory(stockGroupName)
-            
-            // for access by group/index
-            StockExchange.sharedInstance.stockHistoryGroupsByName[stockGroupName] = stockHistoryGroup
-            
-            // for access by Ticker
-            for (ticker, stockHistory) in stockHistoryGroup.stockHistoriesByTicker
-            {
-                StockExchange.sharedInstance.stockHistoriesByTicker[ticker] = stockHistory
-            }
-        }
-    }
-    
-    func getStockDayDataFromYahoo()
-    {
-        let crawler = YahooCSVCrawler()
-        
-        crawler.saveHistoricStockDataForTickerListInDirectory("DAX")
-        crawler.saveHistoricStockDataForTickerListInDirectory("TecDAX")
-        crawler.saveHistoricStockDataForTickerListInDirectory("MDAX")
-        crawler.saveHistoricStockDataForTickerListInDirectory("SDAX")
-    }
+    @IBOutlet weak var window: NSWindow!
 }
 
 
