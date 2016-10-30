@@ -44,6 +44,7 @@ class ChartView : NSView
         // draw price history chart
         if let stockHistory = StockExchange.sharedInstance.stockHistoriesByTicker[ticker]
         {
+            drawVolumeHistoryIntoRect(stockHistory: stockHistory, rect: dirtyRect)
             drawStockHistoryIntoRect(stockHistory: stockHistory, rect: dirtyRect)
         }
     }
@@ -73,7 +74,7 @@ class ChartView : NSView
             let pixelX = relativeX * (rect.size.width - 1.0)
             //let valueRange = statistics.maximum - statistics.minimum
             //let pixelY = CGFloat((stockDayData.close - statistics.minimum) / valueRange) * rect.size.height
-            let pixelY = CGFloat(stockDayData.close / statistics.maximum) * rect.size.height
+            let pixelY = CGFloat(stockDayData.close / statistics.maximum) * (rect.size.height - 1.0)
             let point = CGPoint(x: CGFloat(pixelX), y: pixelY)
             
             if firstDataPoint
@@ -93,13 +94,11 @@ class ChartView : NSView
     
     func drawVolumeHistoryIntoRect(stockHistory history: [StockDayData], rect: CGRect)
     {
-        NSColor.white.setStroke()
+        NSColor.gray.setStroke()
         
         let path = NSBezierPath()
         
         let statistics = statisticsForStockHistory(stockHistory: history, tradingDayRange: timeRange)
-        
-        var firstDataPoint = true
         
         for dayIndex: Int in (timeRange.lastTradingDayIndex ... timeRange.firstTradingDayIndex).reversed()
         {
@@ -112,23 +111,14 @@ class ChartView : NSView
             let day = timeRange.numberOfDays() - ((dayIndex - timeRange.lastTradingDayIndex) + 1)
             let relativeX = CGFloat(day) / CGFloat(timeRange.numberOfDays() - 1)
             
-            // closing price
             let pixelX = relativeX * (rect.size.width - 1.0)
-            //let valueRange = statistics.maximum - statistics.minimum
-            //let pixelY = CGFloat((stockDayData.close - statistics.minimum) / valueRange) * rect.size.height
-            let pixelY = CGFloat(stockDayData.close / statistics.maximum) * rect.size.height
-            let point = CGPoint(x: CGFloat(pixelX), y: pixelY)
+            let pixelY = (CGFloat(stockDayData.volume) / CGFloat(statistics.maxVolume)) * (rect.size.height - 1.0) * 0.5
             
-            if firstDataPoint
-            {
-                history[dayIndex].printLine()
-                firstDataPoint = false
-                path.move(to: point)
-            }
-            else
-            {
-                path.line(to: point)
-            }
+            let point0 = CGPoint(x: CGFloat(pixelX), y: 0.0)
+            path.move(to: point0)
+            
+            let point1 = CGPoint(x: CGFloat(pixelX), y: pixelY)
+            path.line(to: point1)
         }
         
         path.stroke()
