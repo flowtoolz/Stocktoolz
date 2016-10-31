@@ -15,6 +15,8 @@ class StupidTrader: Trader
         super.init()
         
         name = "stupid trader"
+        
+        previousDaysRequired = 1
     }
     
     override func tradeOnMarketClosing(_ day: Int, depot: Depot)

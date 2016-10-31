@@ -10,6 +10,7 @@
 		34E40249BDC5BB6E384FC9B4 /* Pods_StockToolz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AB1FDD77D1FB5783794635 /* Pods_StockToolz.framework */; };
 		70956189D82E0931BC7077A7 /* Pods_StockToolzTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F63F47D0051F5E865883E8 /* Pods_StockToolzTests.framework */; };
 		9E00549A1DC28AE800C784AF /* YahooCSVCrawler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0054991DC28AE800C784AF /* YahooCSVCrawler.swift */; };
+		9E5A9A161DC7F1BC0062FD04 /* MovingAverageTrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5A9A151DC7F1BC0062FD04 /* MovingAverageTrader.swift */; };
 		9E5B730B1DC6248E00155AF1 /* StockExchangeDataInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B730A1DC6248E00155AF1 /* StockExchangeDataInjector.swift */; };
 		9E5B730D1DC629CF00155AF1 /* FocusedTimeRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B730C1DC629CF00155AF1 /* FocusedTimeRange.swift */; };
 		9E5B730F1DC631D300155AF1 /* TradingTimeRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B730E1DC631D300155AF1 /* TradingTimeRange.swift */; };
@@ -44,6 +45,7 @@
 		693E02738741539BA800D167 /* Pods-StockToolz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockToolz.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StockToolz/Pods-StockToolz.debug.xcconfig"; sourceTree = "<group>"; };
 		7769AF78642DAE3059ADF7AD /* Pods-StockToolz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockToolz.release.xcconfig"; path = "Pods/Target Support Files/Pods-StockToolz/Pods-StockToolz.release.xcconfig"; sourceTree = "<group>"; };
 		9E0054991DC28AE800C784AF /* YahooCSVCrawler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YahooCSVCrawler.swift; path = StockToolz/YahooCSVCrawler.swift; sourceTree = "<group>"; };
+		9E5A9A151DC7F1BC0062FD04 /* MovingAverageTrader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovingAverageTrader.swift; path = StockToolz/MovingAverageTrader.swift; sourceTree = "<group>"; };
 		9E5B730A1DC6248E00155AF1 /* StockExchangeDataInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StockExchangeDataInjector.swift; path = StockToolz/StockExchangeDataInjector.swift; sourceTree = "<group>"; };
 		9E5B730C1DC629CF00155AF1 /* FocusedTimeRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FocusedTimeRange.swift; path = StockToolz/FocusedTimeRange.swift; sourceTree = "<group>"; };
 		9E5B730E1DC631D300155AF1 /* TradingTimeRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TradingTimeRange.swift; path = StockToolz/TradingTimeRange.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				9EEA201A1DC55E02008EB358 /* TraderPerformanceTest.swift */,
+				9E5A9A151DC7F1BC0062FD04 /* MovingAverageTrader.swift */,
 				9E6B493B1DC56B90005A5848 /* StupidTrader.swift */,
 				9E6B49391DC56B60005A5848 /* LazyTrader.swift */,
 				9E5B730C1DC629CF00155AF1 /* FocusedTimeRange.swift */,
@@ -454,6 +457,7 @@
 				9E00549A1DC28AE800C784AF /* YahooCSVCrawler.swift in Sources */,
 				9E6EEFA21DC20B3300C228D0 /* AppDelegate.swift in Sources */,
 				9EEA20111DC4CDB1008EB358 /* ChartView.swift in Sources */,
+				9E5A9A161DC7F1BC0062FD04 /* MovingAverageTrader.swift in Sources */,
 				9EEA20151DC53F0C008EB358 /* StockExchange.swift in Sources */,
 				9EEA20191DC55D06008EB358 /* Statistics.swift in Sources */,
 				9E6B493C1DC56B90005A5848 /* StupidTrader.swift in Sources */,

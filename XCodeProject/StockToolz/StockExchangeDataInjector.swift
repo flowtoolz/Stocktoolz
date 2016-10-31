@@ -30,5 +30,7 @@ class StockExchangeDataInjector
                 StockExchange.sharedInstance.stockHistoriesByTicker[ticker] = stockHistory
             }
         }
+        
+        Statistics.sharedInstance.calculateAllMovingAverages()
     }
 }

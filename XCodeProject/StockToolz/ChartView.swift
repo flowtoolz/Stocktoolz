@@ -42,21 +42,56 @@ class ChartView : NSView
         }
         
         // draw price history chart
-        if let stockHistory = StockExchange.sharedInstance.stockHistoriesByTicker[ticker]
+        if let stockHistory = StockExchange.sharedInstance.stockHistoriesByTicker[ticker],
+            let movingAverages = Statistics.sharedInstance.movingAveragesByTicker[ticker]
         {
             drawVolumeHistoryIntoRect(stockHistory: stockHistory, rect: dirtyRect)
-            drawStockHistoryIntoRect(stockHistory: stockHistory, rect: dirtyRect)
+            drawStockHistoryIntoRect(stockHistory: stockHistory,
+                                     movingAverages: movingAverages,
+                                     rect: dirtyRect)
         }
     }
     
-    func drawStockHistoryIntoRect(stockHistory history: [StockDayData], rect: CGRect)
+    func drawStockHistoryIntoRect(stockHistory history: [StockDayData], movingAverages: [Double], rect: CGRect)
     {
-        NSColor.white.setStroke()
-        
-        let path = NSBezierPath()
-        
         let statistics = statisticsForStockHistory(stockHistory: history, tradingDayRange: timeRange)
         
+        // moving average
+        let pathMovingAverage = NSBezierPath()
+        NSColor.gray.setStroke()
+        var firstMovingAveragePoint = true
+        
+        for dayIndex: Int in (timeRange.lastTradingDayIndex ... timeRange.firstTradingDayIndex).reversed()
+        {
+            if dayIndex >= movingAverages.count || dayIndex < 0
+            {
+                continue
+            }
+
+            let day = timeRange.numberOfDays() - ((dayIndex - timeRange.lastTradingDayIndex) + 1)
+            let relativeX = CGFloat(day) / CGFloat(timeRange.numberOfDays() - 1)
+            let pixelX = relativeX * (rect.size.width - 1.0)
+           
+            let movinAveragePixelY = CGFloat(movingAverages[dayIndex] / statistics.maximum) * (rect.size.height - 1.0)
+            
+            let movingAveragePoint = CGPoint(x: pixelX, y: movinAveragePixelY)
+            
+            if firstMovingAveragePoint
+            {
+                firstMovingAveragePoint = false
+                pathMovingAverage.move(to: movingAveragePoint)
+            }
+            else
+            {
+                pathMovingAverage.line(to: movingAveragePoint)
+            }
+        }
+        
+        pathMovingAverage.stroke()
+        
+        // closing price
+        NSColor.white.setStroke()
+        let path = NSBezierPath()
         var firstDataPoint = true
         
         for dayIndex: Int in (timeRange.lastTradingDayIndex ... timeRange.firstTradingDayIndex).reversed()
@@ -65,12 +100,11 @@ class ChartView : NSView
             {
                 continue
             }
-
+            
             let stockDayData = history[dayIndex]
             let day = timeRange.numberOfDays() - ((dayIndex - timeRange.lastTradingDayIndex) + 1)
             let relativeX = CGFloat(day) / CGFloat(timeRange.numberOfDays() - 1)
             
-            // closing price
             let pixelX = relativeX * (rect.size.width - 1.0)
             //let valueRange = statistics.maximum - statistics.minimum
             //let pixelY = CGFloat((stockDayData.close - statistics.minimum) / valueRange) * rect.size.height

@@ -8,10 +8,72 @@
 
 import Foundation
 
-func statisticsForStockHistory(stockHistory history: [StockDayData],
-                               tradingDayRange: TradingTimeRange) -> Statistics
+class Statistics
 {
-    var statistics = Statistics()
+    func calculateAllMovingAverages()
+    {
+        movingAveragesByTicker.removeAll()
+        
+        let exchange = StockExchange.sharedInstance
+        
+        for ticker in exchange.stockHistoriesByTicker.keys
+        {
+            guard let history = exchange.stockHistoriesByTicker[ticker] else
+            {
+                return
+            }
+            
+            movingAveragesByTicker[ticker] = movingAverageForStockHistory(stockHistory: history,
+                                                                          numberOfDays: Statistics.movingAverageOverNumberOfDays)
+        }
+    }
+    
+    var movingAveragesByTicker = [String : [Double]]()
+    
+    static let movingAverageOverNumberOfDays = 1
+    
+    // Singleton
+    
+    static let sharedInstance = Statistics()
+    
+    private init() {}
+}
+
+func movingAverageForStockHistory(stockHistory history: [StockDayData], numberOfDays: Int) -> [Double]?
+{
+    if numberOfDays > history.count
+    {
+        print("error: not enough days in history to calculate moving average \(numberOfDays)")
+        
+        return nil
+    }
+    var movingAverage = [Double]()
+    
+    var sum = 0.0
+    
+    for i in (0 ..< history.count)
+    {
+        sum += history[i].close
+        
+        if i + 1 < numberOfDays
+        {
+            continue
+        }
+
+        movingAverage.append(sum / Double(numberOfDays))
+        
+        let indexOfAverage = i - (numberOfDays - 1)
+        
+        sum -= history[indexOfAverage].close
+    }
+    
+    return movingAverage
+}
+
+func statisticsForStockHistory(stockHistory history: [StockDayData],
+                               tradingDayRange: TradingTimeRange) -> MinumuAndMaximum
+{
+    var statistics = MinumuAndMaximum()
     
     for i in tradingDayRange.lastTradingDayIndex ... tradingDayRange.firstTradingDayIndex
     {
@@ -44,7 +106,7 @@ func statisticsForStockHistory(stockHistory history: [StockDayData],
     return statistics
 }
 
-struct Statistics
+struct MinumuAndMaximum
 {
     var minimum: Double = -1.0
     var maximum: Double = 0.0

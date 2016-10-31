@@ -18,9 +18,7 @@ class Trader
             return false
         }
         
-        let numPreviousDaysRequiredToTrade = 1
-        
-        if dayIndex < 0 || dayIndex + numPreviousDaysRequiredToTrade >= history.count
+        if dayIndex < 0 || dayIndex + previousDaysRequired >= history.count
         {
             return false
         }
@@ -42,4 +40,6 @@ class Trader
     var stockHistory: [StockDayData] = []
 
     var name = "inactive trader"
+    
+    var previousDaysRequired = 0
 }

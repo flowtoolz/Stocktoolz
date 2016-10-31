@@ -12,11 +12,11 @@ class TraderPerformanceTest
 {
     func run()
     {
-        let traders = [StupidTrader(), LazyTrader()]
+        let traders = [StupidTrader(), LazyTrader(), MovingAverageTrader()]
         
-        var sumOfYearReturns = [0.0, 0.0]
-        var numOfHistoriesTraded = [0, 0]
-        var sumOfInconsistencies = [0.0, 0.0]
+        var sumOfYearReturns = [0.0, 0.0, 0.0]
+        var numOfHistoriesTraded = [0, 0, 0]
+        var sumOfInconsistencies = [0.0, 0.0, 0.0]
         
         for ticker in StockExchange.sharedInstance.stockHistoriesByTicker.keys
         {
@@ -85,10 +85,10 @@ class TraderPerformanceTest
         {
             let trader = traders[i]
             
-            resultString.append(trader.name + ":\ncompanies traded: \(numOfHistoriesTraded[i])\nresult normalized for \(tradingDaysPerYear) trading days\nyearly growth: \(sumOfYearReturns[i] / Double(numOfHistoriesTraded[i]))\ninconsistency: \(sumOfInconsistencies[i] / Double(numOfHistoriesTraded[i]))\n")
+            resultString.append(trader.name + ":\ngrowth: \(sumOfYearReturns[i] / Double(numOfHistoriesTraded[i]))\ninconsistency: \(sumOfInconsistencies[i] / Double(numOfHistoriesTraded[i]))\n")
         }
         
-        //print(resultString)
+        print(resultString)
     }
     
     var resultString = ""

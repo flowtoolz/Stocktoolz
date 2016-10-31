@@ -18,6 +18,8 @@ class AppDelegate: NSObject, NSApplicationDelegate
     func applicationDidFinishLaunching(_ aNotification: Notification)
     {
         createViews()
+        
+        loadData()
     }
 
     // MARK: Views
@@ -46,7 +48,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
         loadButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         loadButton.autoPinEdge(.top, to: .bottom, of: chartView, withOffset: 10)
         loadButton.autoMatch(.width, to: .height, of: loadButton)
-        loadButton.action = #selector(AppDelegate.loadDataButtonClicked)
+        loadButton.action = #selector(AppDelegate.loadData)
         
         // run button
         let runButton = NSButton()
@@ -151,7 +153,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
         resultView.stringValue = test.resultString
     }
     
-    func loadDataButtonClicked()
+    func loadData()
     {
         StockExchangeDataInjector.reloadStockExchangeData()
         
