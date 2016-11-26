@@ -1,0 +1,40 @@
+{
+  "name": "FTPortfolio",
+  "version": "0.1.0",
+  "summary": "A short summary of FTPortfolio",
+  "description": "A short description of FTPortfolio",
+  "homepage": "https://flowtoolz.com",
+  "license": "commercial",
+  "authors": {
+    "Flowtoolz": "contact@flowtoolz.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/FTPortfolio.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0",
+    "tvos": "9.0",
+    "osx": "10.11"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/foundation/**/*",
+  "ios": {
+    "source_files": [
+      "Pod/uikit/**/*",
+      "Pod/coredata/**/*"
+    ]
+  },
+  "osx": {
+    "source_files": [
+      "Pod/cocoa/**/*",
+      "Pod/coredata/**/*"
+    ]
+  },
+  "tvos": {
+    "source_files": [
+      "Pod/uikit/**/*",
+      "Pod/coredata/**/*"
+    ]
+  }
+}

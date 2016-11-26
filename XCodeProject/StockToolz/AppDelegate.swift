@@ -19,7 +19,9 @@ class AppDelegate: NSObject, NSApplicationDelegate
     {
         createViews()
         
-        loadData()
+        getStockDayDataFromYahoo()
+        
+        loadStockDataIntoViews()
     }
 
     // MARK: Views
@@ -48,7 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
         loadButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         loadButton.autoPinEdge(.top, to: .bottom, of: chartView, withOffset: 10)
         loadButton.autoMatch(.width, to: .height, of: loadButton)
-        loadButton.action = #selector(AppDelegate.loadData)
+        loadButton.action = #selector(AppDelegate.loadStockDataIntoViews)
         
         // run button
         let runButton = NSButton()
@@ -153,7 +155,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
         resultView.stringValue = test.resultString
     }
     
-    func loadData()
+    func loadStockDataIntoViews()
     {
         StockExchangeDataInjector.reloadStockExchangeData()
         
