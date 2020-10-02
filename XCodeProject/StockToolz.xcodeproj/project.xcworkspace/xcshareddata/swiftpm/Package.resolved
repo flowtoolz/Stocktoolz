@@ -9,6 +9,15 @@
           "revision": "0a68303fcead0d8db1bf404e8b8bd141751495fb",
           "version": null
         }
+      },
+      {
+        "package": "SwiftyToolz",
+        "repositoryURL": "https://github.com/flowtoolz/SwiftyToolz.git",
+        "state": {
+          "branch": "master",
+          "revision": "d52664f70d7514a97ba99fa3e50ca060a5915768",
+          "version": null
+        }
       }
     ]
   },
