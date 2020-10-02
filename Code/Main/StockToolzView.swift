@@ -128,10 +128,12 @@ class StockToolzView: LayerBackedView
 
             self.resultView.stringValue = "Loading data from folder ..."
             
-            DispatchQueue.global().async {
+            DispatchQueue.global().async
+            {
                 StockExchangeDataInjector.reloadStockExchangeData(rootFolder: folder)
                 // FIXME: view should obviously observe the data ...
-                DispatchQueue.main.async {
+                DispatchQueue.main.async
+                {
                     self.resultView.stringValue = ""
                     self.chartView.redraw()
                 }

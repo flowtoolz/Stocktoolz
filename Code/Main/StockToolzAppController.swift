@@ -1,10 +1,9 @@
 import UIToolz
 
+@main
 class StockToolzAppController: AppController
 {
-    init()
-    {
-        super.init(appView: StockToolzView())
-        startApp()
-    }
+    static func main() { instance.startApp() }
+    
+    private static let instance = StockToolzAppController(appView: StockToolzView())
 }
