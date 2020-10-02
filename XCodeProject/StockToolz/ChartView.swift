@@ -17,7 +17,8 @@ class ChartView : NSView
         
         // background
         NSColor.black.setFill()
-        NSRectFill(dirtyRect)
+        
+        dirtyRect.fill()
     
         // get ticker
         let tickerArray = Array(StockExchange.sharedInstance.stockHistoriesByTicker.keys)
@@ -32,9 +33,9 @@ class ChartView : NSView
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = NSTextAlignment.center
             
-            let textFontAttributes = [NSFontAttributeName: font,
-                                      NSParagraphStyleAttributeName: paragraphStyle,
-                                      NSForegroundColorAttributeName: NSColor.init(white: 0.15, alpha: 1.0)]
+            let textFontAttributes = [NSAttributedString.Key.font: font,
+                                      NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                                      NSAttributedString.Key.foregroundColor: NSColor.init(white: 0.15, alpha: 1.0)]
             
             var tickerRect = dirtyRect
             tickerRect.size.height = (dirtyRect.size.height / 2.0) + 60.0

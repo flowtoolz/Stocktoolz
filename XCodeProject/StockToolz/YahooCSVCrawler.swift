@@ -37,11 +37,11 @@ class YahooCSVCrawler
     
     func saveHistoricStockDataToFileForTicker(_ ticker: String, directoryName: String)
     {
-        Alamofire.request("https://ichart.finance.yahoo.com/table.csv?s=" + ticker + "&g=d").responseString
+        AF.request("https://ichart.finance.yahoo.com/table.csv?s=" + ticker + "&g=d").responseString
         {
-            response in
+            result in
             
-            if let text = response.result.value
+            if let text = result.value
             {
                 self.saveTextToFile(text, fileName: directoryName + "/" + ticker + ".txt")
             }

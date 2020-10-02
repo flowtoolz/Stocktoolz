@@ -116,35 +116,35 @@ class AppDelegate: NSObject, NSApplicationDelegate
     
     // MARK: Interaction
     
-    func zoomInButtonClicked()
+    @objc func zoomInButtonClicked()
     {
         FocusedTimeRange.sharedInstance.zoomIn()
         
         chartView.redraw()
     }
     
-    func zoomOutButtonClicked()
+    @objc func zoomOutButtonClicked()
     {
         FocusedTimeRange.sharedInstance.zoomOut()
         
         chartView.redraw()
     }
     
-    func rightButtonClicked()
+    @objc func rightButtonClicked()
     {
         FocusedTimeRange.sharedInstance.shiftToFuture()
         
         chartView.redraw()
     }
     
-    func leftButtonClicked()
+    @objc func leftButtonClicked()
     {
         FocusedTimeRange.sharedInstance.shiftToPast()
         
         chartView.redraw()
     }
     
-    func runButtonClicked()
+    @objc func runButtonClicked()
     {
         resultView.stringValue = "calculating ..."
         
@@ -155,7 +155,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
         resultView.stringValue = test.resultString
     }
     
-    func loadStockDataIntoViews()
+    @objc func loadStockDataIntoViews()
     {
         StockExchangeDataInjector.reloadStockExchangeData()
         
