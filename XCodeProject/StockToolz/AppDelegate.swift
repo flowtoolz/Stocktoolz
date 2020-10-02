@@ -8,8 +8,9 @@
 
 import Cocoa
 import GetLaid
-import SwiftyToolz
+import FoundationToolz
 import SwiftObserver
+import SwiftyToolz
 
 @NSApplicationMain
 

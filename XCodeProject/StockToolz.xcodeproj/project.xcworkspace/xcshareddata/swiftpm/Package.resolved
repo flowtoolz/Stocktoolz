@@ -2,12 +2,30 @@
   "object": {
     "pins": [
       {
+        "package": "FoundationToolz",
+        "repositoryURL": "https://github.com/flowtoolz/FoundationToolz",
+        "state": {
+          "branch": "master",
+          "revision": "f2055afe1ed63483e7ea2f05dbc85c8054083535",
+          "version": null
+        }
+      },
+      {
         "package": "GetLaid",
         "repositoryURL": "https://github.com/flowtoolz/GetLaid.git",
         "state": {
           "branch": "master",
           "revision": "0a68303fcead0d8db1bf404e8b8bd141751495fb",
           "version": null
+        }
+      },
+      {
+        "package": "Reachability",
+        "repositoryURL": "https://github.com/ashleymills/Reachability.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "6c8652a8ea35a64cf36367d07b3d6e5e6a24b272",
+          "version": "4.3.1"
         }
       },
       {
