@@ -13,7 +13,7 @@
 		9679E62E25278B1B0071CE55 /* FoundationToolz in Frameworks */ = {isa = PBXBuildFile; productRef = 9679E62D25278B1B0071CE55 /* FoundationToolz */; };
 		9689CE2F252791BB00C7B2FA /* UIToolz in Frameworks */ = {isa = PBXBuildFile; productRef = 9689CE2E252791BB00C7B2FA /* UIToolz */; };
 		96952C6325279FD900F202C8 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96952C6225279FD900F202C8 /* main.swift */; };
-		96952C672527A01000F202C8 /* StockToolzController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96952C662527A01000F202C8 /* StockToolzController.swift */; };
+		96952C672527A01000F202C8 /* StockToolzAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96952C662527A01000F202C8 /* StockToolzAppController.swift */; };
 		96952C6D2527A0E000F202C8 /* StockToolzView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96952C6C2527A0E000F202C8 /* StockToolzView.swift */; };
 		9E00549A1DC28AE800C784AF /* YahooCSVCrawler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0054991DC28AE800C784AF /* YahooCSVCrawler.swift */; };
 		9E5A9A161DC7F1BC0062FD04 /* MovingAverageTrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5A9A151DC7F1BC0062FD04 /* MovingAverageTrader.swift */; };
@@ -45,7 +45,7 @@
 
 /* Begin PBXFileReference section */
 		96952C6225279FD900F202C8 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		96952C662527A01000F202C8 /* StockToolzController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockToolzController.swift; sourceTree = "<group>"; };
+		96952C662527A01000F202C8 /* StockToolzAppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockToolzAppController.swift; sourceTree = "<group>"; };
 		96952C6C2527A0E000F202C8 /* StockToolzView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockToolzView.swift; sourceTree = "<group>"; };
 		9E0054991DC28AE800C784AF /* YahooCSVCrawler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YahooCSVCrawler.swift; sourceTree = "<group>"; };
 		9E5A9A151DC7F1BC0062FD04 /* MovingAverageTrader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovingAverageTrader.swift; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				96952C6225279FD900F202C8 /* main.swift */,
-				96952C662527A01000F202C8 /* StockToolzController.swift */,
+				96952C662527A01000F202C8 /* StockToolzAppController.swift */,
 				96952C6C2527A0E000F202C8 /* StockToolzView.swift */,
 			);
 			path = Main;
@@ -328,7 +328,7 @@
 				9EEA20131DC53A31008EB358 /* Trader.swift in Sources */,
 				9EEA20171DC55A18008EB358 /* Depot.swift in Sources */,
 				9E5B730D1DC629CF00155AF1 /* FocusedTimeRange.swift in Sources */,
-				96952C672527A01000F202C8 /* StockToolzController.swift in Sources */,
+				96952C672527A01000F202C8 /* StockToolzAppController.swift in Sources */,
 				9E00549A1DC28AE800C784AF /* YahooCSVCrawler.swift in Sources */,
 				9EEA20111DC4CDB1008EB358 /* ChartView.swift in Sources */,
 				96952C6325279FD900F202C8 /* main.swift in Sources */,
