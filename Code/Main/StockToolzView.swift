@@ -7,7 +7,6 @@ class StockToolzView: LayerBackedView
     override init(frame frameRect: NSRect)
     {
         super.init(frame: frameRect)
-        
         layoutViews()
     }
     
@@ -28,7 +27,7 @@ class StockToolzView: LayerBackedView
         loadButton >> bottom.offset(-10)
         loadButton.top >> chartView.bottom.offset(10)
         loadButton.width >> loadButton.height
-        loadButton.action = #selector(loadStockDataIntoViews)
+        loadButton.action = #selector(loadStockDataFromSelectedDirectory)
         
         // run button
         let runButton = addForAutoLayout(NSButton())
@@ -121,17 +120,22 @@ class StockToolzView: LayerBackedView
         resultView.stringValue = "NOt IMPLEMENTED"
     }
     
-    @objc func loadStockDataIntoViews()
+    @objc func loadStockDataFromSelectedDirectory()
     {
-        resultView.stringValue = "Selecting folder ..."
-        
         FolderSelectionPanel().selectFolder
         {
             folder in
 
-            //        YahooCSVCrawler().downloadAllHistoricStockData()
-            StockExchangeDataInjector.reloadStockExchangeData(rootFolder: folder)
-            self.chartView.redraw()
+            self.resultView.stringValue = "Loading data from folder ..."
+            
+            DispatchQueue.global().async {
+                StockExchangeDataInjector.reloadStockExchangeData(rootFolder: folder)
+                // FIXME: view should obviously observe the data ...
+                DispatchQueue.main.async {
+                    self.resultView.stringValue = ""
+                    self.chartView.redraw()
+                }
+            }
         }
     }
     
