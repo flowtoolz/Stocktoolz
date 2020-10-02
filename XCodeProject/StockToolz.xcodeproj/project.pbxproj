@@ -11,6 +11,7 @@
 		96548867252785CF00262C17 /* SwiftyToolz in Frameworks */ = {isa = PBXBuildFile; productRef = 96548866252785CF00262C17 /* SwiftyToolz */; };
 		9654886E2527893A00262C17 /* SwiftObserver in Frameworks */ = {isa = PBXBuildFile; productRef = 9654886D2527893A00262C17 /* SwiftObserver */; };
 		9679E62E25278B1B0071CE55 /* FoundationToolz in Frameworks */ = {isa = PBXBuildFile; productRef = 9679E62D25278B1B0071CE55 /* FoundationToolz */; };
+		9689CE2F252791BB00C7B2FA /* UIToolz in Frameworks */ = {isa = PBXBuildFile; productRef = 9689CE2E252791BB00C7B2FA /* UIToolz */; };
 		9E00549A1DC28AE800C784AF /* YahooCSVCrawler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0054991DC28AE800C784AF /* YahooCSVCrawler.swift */; };
 		9E5A9A161DC7F1BC0062FD04 /* MovingAverageTrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5A9A151DC7F1BC0062FD04 /* MovingAverageTrader.swift */; };
 		9E5B730B1DC6248E00155AF1 /* StockExchangeDataInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B730A1DC6248E00155AF1 /* StockExchangeDataInjector.swift */; };
@@ -71,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9689CE2F252791BB00C7B2FA /* UIToolz in Frameworks */,
 				9654886E2527893A00262C17 /* SwiftObserver in Frameworks */,
 				963CBD8B25277BC500FF4916 /* GetLaid in Frameworks */,
 				9679E62E25278B1B0071CE55 /* FoundationToolz in Frameworks */,
@@ -209,6 +211,7 @@
 				96548866252785CF00262C17 /* SwiftyToolz */,
 				9654886D2527893A00262C17 /* SwiftObserver */,
 				9679E62D25278B1B0071CE55 /* FoundationToolz */,
+				9689CE2E252791BB00C7B2FA /* UIToolz */,
 			);
 			productName = StockToolz;
 			productReference = 9E6EEF9E1DC20B3300C228D0 /* StockToolz.app */;
@@ -270,6 +273,7 @@
 				96548865252785CF00262C17 /* XCRemoteSwiftPackageReference "SwiftyToolz" */,
 				9654886C2527893A00262C17 /* XCRemoteSwiftPackageReference "SwiftObserver" */,
 				9679E62C25278B1B0071CE55 /* XCRemoteSwiftPackageReference "FoundationToolz" */,
+				9689CE2D252791BB00C7B2FA /* XCRemoteSwiftPackageReference "UIToolz" */,
 			);
 			productRefGroup = 9E6EEF9F1DC20B3300C228D0 /* Products */;
 			projectDirPath = "";
@@ -609,6 +613,14 @@
 				kind = branch;
 			};
 		};
+		9689CE2D252791BB00C7B2FA /* XCRemoteSwiftPackageReference "UIToolz" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/flowtoolz/UIToolz";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -631,6 +643,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9679E62C25278B1B0071CE55 /* XCRemoteSwiftPackageReference "FoundationToolz" */;
 			productName = FoundationToolz;
+		};
+		9689CE2E252791BB00C7B2FA /* UIToolz */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9689CE2D252791BB00C7B2FA /* XCRemoteSwiftPackageReference "UIToolz" */;
+			productName = UIToolz;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

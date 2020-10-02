@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import UIToolz
 import GetLaid
 import FoundationToolz
 import SwiftObserver

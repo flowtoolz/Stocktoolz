@@ -45,6 +45,15 @@
           "revision": "d52664f70d7514a97ba99fa3e50ca060a5915768",
           "version": null
         }
+      },
+      {
+        "package": "UIToolz",
+        "repositoryURL": "https://github.com/flowtoolz/UIToolz",
+        "state": {
+          "branch": "master",
+          "revision": "c2db40a912110072539e690bdff21952a8e16c42",
+          "version": null
+        }
       }
     ]
   },
