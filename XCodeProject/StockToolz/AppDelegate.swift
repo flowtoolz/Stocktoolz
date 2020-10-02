@@ -9,6 +9,7 @@
 import Cocoa
 import GetLaid
 import SwiftyToolz
+import SwiftObserver
 
 @NSApplicationMain
 

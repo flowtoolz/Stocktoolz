@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "SwiftObserver",
+        "repositoryURL": "https://github.com/flowtoolz/SwiftObserver.git",
+        "state": {
+          "branch": "master",
+          "revision": "9ddfddd69b49315188d9d21f35b33cd997c0b992",
+          "version": null
+        }
+      },
+      {
         "package": "SwiftyToolz",
         "repositoryURL": "https://github.com/flowtoolz/SwiftyToolz.git",
         "state": {
