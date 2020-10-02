@@ -9,10 +9,6 @@ class StockToolzView: LayerBackedView
         super.init(frame: frameRect)
         
         layoutViews()
-        
-        // FIXME: let view observe data and redraw itself when data updates ...
-        getStockDayDataFromYahoo()
-        loadStockDataIntoViews()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -122,19 +118,21 @@ class StockToolzView: LayerBackedView
     
     @objc func runButtonClicked()
     {
-        resultView.stringValue = "NOT IMPLEMENTED"
+        resultView.stringValue = "NOt IMPLEMENTED"
     }
     
     @objc func loadStockDataIntoViews()
     {
-        StockExchangeDataInjector.reloadStockExchangeData()
+        resultView.stringValue = "Selecting folder ..."
         
-        chartView.redraw()
-    }
-    
-    func getStockDayDataFromYahoo()
-    {
-        YahooCSVCrawler().downloadAllHistoricStockData()
+        FolderSelectionPanel().selectFolder
+        {
+            folder in
+
+            //        YahooCSVCrawler().downloadAllHistoricStockData()
+            StockExchangeDataInjector.reloadStockExchangeData(rootFolder: folder)
+            self.chartView.redraw()
+        }
     }
     
     var chartView = ChartView()

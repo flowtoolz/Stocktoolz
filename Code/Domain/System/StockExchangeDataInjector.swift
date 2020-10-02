@@ -10,7 +10,7 @@ import Foundation
 
 class StockExchangeDataInjector
 {
-    static func reloadStockExchangeData()
+    static func reloadStockExchangeData(rootFolder: URL)
     {
         StockExchange.sharedInstance.removeAllData()
         
@@ -19,7 +19,10 @@ class StockExchangeDataInjector
             var stockHistoryGroup = StockHistoryGroup()
             
             stockHistoryGroup.name = stockGroupName
-            stockHistoryGroup.stockHistoriesByTicker = YahooCSVParser().getStockHistoriesFromDirectory(stockGroupName)
+            
+            let groupFolder = rootFolder.appendingPathComponent(stockGroupName)
+            
+            stockHistoryGroup.stockHistoriesByTicker = YahooCSVParser().getStockHistories(fromDirectory: groupFolder)
             
             // for access by group/index
             StockExchange.sharedInstance.stockHistoryGroupsByName[stockGroupName] = stockHistoryGroup

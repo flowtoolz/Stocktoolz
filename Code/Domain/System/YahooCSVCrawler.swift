@@ -10,31 +10,32 @@ import Foundation
 
 class YahooCSVCrawler
 {
-    func downloadAllHistoricStockData()
+    func downloadAllHistoricStockData(toRootFolder rootFolder: URL)
     {
-        saveHistoricStockDataForTickerListInDirectory("DAX")
-        saveHistoricStockDataForTickerListInDirectory("TecDAX")
-        saveHistoricStockDataForTickerListInDirectory("MDAX")
-        saveHistoricStockDataForTickerListInDirectory("SDAX")
+        for group in ["DAX", "TecDAX", "MDAX", "SDAX"]
+        {
+            let folder = rootFolder.appendingPathComponent(group)
+            saveHistoricStockDataForTickerList(inDirectory: folder)
+        }
     }
     
-    func saveHistoricStockDataForTickerListInDirectory(_ directoryName: String)
+    func saveHistoricStockDataForTickerList(inDirectory directory: URL)
     {
         let parser = YahooCSVParser()
-        let tickerArray = parser.getTickersFromDirectory(directoryName)
+        let tickerArray = parser.getTickers(fromDirectory: directory)
         
         var count = 0
         
         for ticker in tickerArray
         {
-            saveHistoricStockDataToFileForTicker(ticker, directoryName: directoryName)
+            saveHistoricStockDataToFileForTicker(ticker, directory: directory)
             
             count += 1
             print("saved historic data for \(count) tickers")
         }
     }
     
-    func saveHistoricStockDataToFileForTicker(_ ticker: String, directoryName: String)
+    func saveHistoricStockDataToFileForTicker(_ ticker: String, directory: URL)
     {
         let urlString = "https://ichart.finance.yahoo.com/table.csv?s=" + ticker + "&g=d"
         
@@ -43,10 +44,12 @@ class YahooCSVCrawler
             return
         }
         
+        let file = directory.appendingPathComponent(ticker + ".txt")
+        
         DispatchQueue.global().async {
             do {
                 let text = try String(contentsOf: url)
-                self.saveTextToFile(text, fileName: directoryName + "/" + ticker + ".txt")
+                self.save(text, toFile: file)
             }
             catch {
                 print(error.localizedDescription)
@@ -54,19 +57,17 @@ class YahooCSVCrawler
         }
     }
     
-    func saveTextToFile(_ text:String, fileName: String)
+    func save(_ text: String, toFile file: URL)
     {
-        let filePath = FileManager.default.currentDirectoryPath + "/" + fileName
-        
         do
         {
-            try text.write(toFile: filePath,
+            try text.write(toFile: file.absoluteString,
                            atomically: false,
                            encoding: String.Encoding.utf8)
         }
         catch
         {
-            print("error: could not write text to file \"" + fileName + "\"")
+            print("error: could not write text to file \"" + file.absoluteString + "\"")
         }
     }
 }

@@ -10,11 +10,11 @@ import Foundation
 
 class YahooCSVParser
 {
-    func getStockHistoriesFromDirectory(_ directoryName: String) -> [String : [StockDayData]]
+    func getStockHistories(fromDirectory directory: URL) -> [String : [StockDayData]]
     {
         var stockHistoriesByTicker = [String : [StockDayData]]()
         
-        let tickers = getTickersFromDirectory(directoryName)
+        let tickers = getTickers(fromDirectory: directory)
         
         for ticker in tickers
         {
@@ -24,7 +24,8 @@ class YahooCSVParser
                 continue
             }
             
-            let stockHistory = getStockDayDataFromFile(directoryName + "/" + ticker + ".txt")
+            let stockDataFile = directory.appendingPathComponent(ticker + ".txt")
+            let stockHistory = getStockDayData(fromFile: stockDataFile)
             
             stockHistoriesByTicker[ticker] = stockHistory
         }
@@ -32,11 +33,11 @@ class YahooCSVParser
         return stockHistoriesByTicker
     }
     
-    func getTickersFromDirectory(_ directoryName: String) -> [String]
+    func getTickers(fromDirectory directory: URL) -> [String]
     {
-        let filePath = directoryName + "/" + "ticker_list.txt"
+        let filePath = directory.appendingPathComponent("ticker_list.txt")
         
-        let tickerListText = YahooCSVParser().readTextFromFile(filePath)
+        let tickerListText = YahooCSVParser().readText(fromFile: filePath)
         
         var tickerArray: [String] = []
         
@@ -50,10 +51,10 @@ class YahooCSVParser
         return tickerArray
     }
 
-    func getStockDayDataFromFile(_ fileName: String) -> [StockDayData]
+    func getStockDayData(fromFile file: URL) -> [StockDayData]
     {
         // get data lines from file
-        let text = readTextFromFile(fileName)
+        let text = readText(fromFile: file)
         
         let lines = getDataLinesFromText(text)
 
@@ -77,21 +78,17 @@ class YahooCSVParser
         return stockDayDataArray
     }
     
-    func readTextFromFile(_ fileName: String) -> String
+    func readText(fromFile file: URL) -> String
     {
-        let fm = FileManager()
-        
-        let filePath = fm.currentDirectoryPath + "/" + fileName
-        
         var contentString = ""
         
         do
         {
-            contentString = try String(contentsOfFile: filePath)
+            contentString = try String(contentsOf: file)
         }
         catch
         {
-            print("could not read file from \"" + filePath + "\"")
+            print("could not read file from \"" + file.absoluteString + "\"")
         }
         
         return contentString
