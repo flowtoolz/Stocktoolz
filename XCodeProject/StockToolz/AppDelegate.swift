@@ -146,13 +146,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
     
     @objc func runButtonClicked()
     {
-        resultView.stringValue = "calculating ..."
-        
-        let test = TraderPerformanceTest()
-        
-        test.run()
-        
-        resultView.stringValue = test.resultString
+        resultView.stringValue = "NOT IMPLEMENTED"
     }
     
     @objc func loadStockDataIntoViews()
