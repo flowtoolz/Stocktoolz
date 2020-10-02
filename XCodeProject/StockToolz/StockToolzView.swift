@@ -1,68 +1,50 @@
-//
-//  AppDelegate.swift
-//  StockToolz
-//
-//  Created by Sebastian on 27/10/16.
-//  Copyright © 2016 Flowtoolz. All rights reserved.
-//
-
-import Cocoa
+import AppKit
 import UIToolz
 import GetLaid
-import FoundationToolz
-import SwiftObserver
-import SwiftyToolz
 
-@NSApplicationMain
-
-class AppDelegate: NSObject, NSApplicationDelegate
+class StockToolzView: LayerBackedView
 {
-    // MARK: App Life Cycle
-    
-    func applicationDidFinishLaunching(_ aNotification: Notification)
+    override init(frame frameRect: NSRect)
     {
-        createViews()
+        super.init(frame: frameRect)
         
+        layoutViews()
+        
+        // FIXME: let view observe data and redraw itself when data updates ...
         getStockDayDataFromYahoo()
-        
         loadStockDataIntoViews()
     }
-
-    // MARK: Views
     
-    func createViews()
+    required init?(coder decoder: NSCoder) { fatalError() }
+    
+    private func layoutViews()
     {
-        guard let mainView = window.contentView else
-        {
-            return
-        }
-        
         // chart view
-        mainView.addForAutoLayout(chartView)
-        chartView >> mainView.allButBottom
-        chartView.height >> mainView.height.at(0.75)
+        addForAutoLayout(chartView)
+        chartView >> allButBottom
+        chartView.height >> height.at(0.75)
         chartView.timeRange = FocusedTimeRange.sharedInstance
         
         // load button
-        let loadButton = mainView.addForAutoLayout(NSButton())
+        let loadButton = addForAutoLayout(NSButton())
         loadButton.title = "Load"
-        loadButton >> mainView.left.offset(10)
-        loadButton >> mainView.bottom.offset(-10)
+        loadButton >> left.offset(10)
+        loadButton >> bottom.offset(-10)
         loadButton.top >> chartView.bottom.offset(10)
         loadButton.width >> loadButton.height
-        loadButton.action = #selector(AppDelegate.loadStockDataIntoViews)
+        loadButton.action = #selector(loadStockDataIntoViews)
         
         // run button
-        let runButton = mainView.addForAutoLayout(NSButton())
+        let runButton = addForAutoLayout(NSButton())
         runButton.title = "Run"
         runButton.left >> loadButton.right.offset(10)
-        runButton >> mainView.bottom.offset(-10)
+        runButton >> bottom.offset(-10)
         runButton.top >> chartView.bottom.offset(10)
         runButton.width >> runButton.height
-        runButton.action = #selector(AppDelegate.runButtonClicked)
+        runButton.action = #selector(runButtonClicked)
         
         // result view
-        mainView.addForAutoLayout(resultView)
+        addForAutoLayout(resultView)
         resultView.left >> runButton.right.offset(10)
         resultView.top >> chartView.bottom.offset(10)
         resultView.isBezeled = false
@@ -73,39 +55,39 @@ class AppDelegate: NSObject, NSApplicationDelegate
         // resultView.maximumNumberOfLines = 2
         
         // left buttons
-        let leftButton = mainView.addForAutoLayout(NSButton())
+        let leftButton = addForAutoLayout(NSButton())
         leftButton.title = "<"
         leftButton.left >> resultView.right.offset(10)
-        leftButton >> mainView.bottom.offset(-10)
+        leftButton >> bottom.offset(-10)
         leftButton.top >> chartView.bottom.offset(10)
         leftButton.width >> leftButton.height.at(0.5)
-        leftButton.action = #selector(AppDelegate.leftButtonClicked)
+        leftButton.action = #selector(leftButtonClicked)
         
         // zoom in/out buttons
-        let zoomInButton = mainView.addForAutoLayout(NSButton())
+        let zoomInButton = addForAutoLayout(NSButton())
         zoomInButton.title = "> <"
         zoomInButton.left >> leftButton.right
         zoomInButton.top >> chartView.bottom.offset(10)
         zoomInButton.width >> leftButton.height
-        zoomInButton.action = #selector(AppDelegate.zoomInButtonClicked)
+        zoomInButton.action = #selector(zoomInButtonClicked)
         
-        let zoomOutButton = mainView.addForAutoLayout(NSButton())
+        let zoomOutButton = addForAutoLayout(NSButton())
         zoomOutButton.title = "<   >"
         zoomOutButton.left >> leftButton.right
-        zoomOutButton >> mainView.bottom.offset(-10)
+        zoomOutButton >> bottom.offset(-10)
         zoomOutButton.top >> zoomInButton.bottom
         zoomOutButton >> zoomInButton.size
-        zoomOutButton.action = #selector(AppDelegate.zoomOutButtonClicked)
+        zoomOutButton.action = #selector(zoomOutButtonClicked)
         
         // right buttons
-        let rightButton = mainView.addForAutoLayout(NSButton())
+        let rightButton = addForAutoLayout(NSButton())
         rightButton.title = ">"
         rightButton.left >> zoomOutButton.right
-        rightButton >> mainView.bottom.offset(-10)
+        rightButton >> bottom.offset(-10)
         rightButton.top >> chartView.bottom.offset(10)
-        rightButton >> mainView.right.offset(-10)
+        rightButton >> right.offset(-10)
         rightButton.width >> leftButton.height.at(0.5)
-        rightButton.action = #selector(AppDelegate.rightButtonClicked)
+        rightButton.action = #selector(rightButtonClicked)
     }
     
     // MARK: Interaction
@@ -154,12 +136,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
     {
         YahooCSVCrawler().downloadAllHistoricStockData()
     }
-
+    
     var chartView = ChartView()
     var resultView = NSTextField()
-    
-    @IBOutlet weak var window: NSWindow!
 }
-
-
-
