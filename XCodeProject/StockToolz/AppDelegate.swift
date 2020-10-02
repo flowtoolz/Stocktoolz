@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import PureLayout
+import GetLaid
 
 @NSApplicationMain
 
@@ -34,38 +34,33 @@ class AppDelegate: NSObject, NSApplicationDelegate
         }
         
         // chart view
-        mainView.addSubview(chartView)
-        chartView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero, excludingEdge: .bottom)
-        chartView.autoMatch(ALDimension.height,
-                            to: ALDimension.height,
-                            of: mainView,
-                            withMultiplier: 0.75)
+        mainView.addForAutoLayout(chartView)
+        chartView >> mainView.allButBottom
+        chartView.height >> mainView.height.at(0.75)
         chartView.timeRange = FocusedTimeRange.sharedInstance
         
         // load button
-        let loadButton = NSButton()
+        let loadButton = mainView.addForAutoLayout(NSButton())
         loadButton.title = "Load"
-        mainView.addSubview(loadButton)
-        loadButton.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
-        loadButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-        loadButton.autoPinEdge(.top, to: .bottom, of: chartView, withOffset: 10)
-        loadButton.autoMatch(.width, to: .height, of: loadButton)
+        loadButton >> mainView.left.offset(10)
+        loadButton >> mainView.bottom.offset(-10)
+        loadButton.top >> chartView.bottom.offset(10)
+        loadButton.width >> loadButton.height
         loadButton.action = #selector(AppDelegate.loadStockDataIntoViews)
         
         // run button
-        let runButton = NSButton()
+        let runButton = mainView.addForAutoLayout(NSButton())
         runButton.title = "Run"
-        mainView.addSubview(runButton)
-        runButton.autoPinEdge(.left, to: .right, of: loadButton, withOffset: 10)
-        runButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-        runButton.autoPinEdge(.top, to: .bottom, of: chartView, withOffset: 10)
-        runButton.autoMatch(.width, to: .height, of: runButton)
+        runButton.left >> loadButton.right.offset(10)
+        runButton >> mainView.bottom.offset(-10)
+        runButton.top >> chartView.bottom.offset(10)
+        runButton.width >> runButton.height
         runButton.action = #selector(AppDelegate.runButtonClicked)
         
         // result view
-        mainView.addSubview(resultView)
-        resultView.autoPinEdge(.left, to: .right, of: runButton, withOffset: 10)
-        resultView.autoPinEdge(.top, to: .bottom, of: chartView, withOffset: 10)
+        mainView.addForAutoLayout(resultView)
+        resultView.left >> runButton.right.offset(10)
+        resultView.top >> chartView.bottom.offset(10)
         resultView.isBezeled = false
         resultView.drawsBackground = false
         resultView.isEditable = false
@@ -74,43 +69,38 @@ class AppDelegate: NSObject, NSApplicationDelegate
         // resultView.maximumNumberOfLines = 2
         
         // left buttons
-        let leftButton = NSButton()
+        let leftButton = mainView.addForAutoLayout(NSButton())
         leftButton.title = "<"
-        mainView.addSubview(leftButton)
-        leftButton.autoPinEdge(.left, to: .right, of: resultView, withOffset: 10)
-        leftButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-        leftButton.autoPinEdge(.top, to: .bottom, of: chartView, withOffset: 10)
-        leftButton.autoMatch(.width, to: .height, of: leftButton, withMultiplier: 0.5)
+        leftButton.left >> resultView.right.offset(10)
+        leftButton >> mainView.bottom.offset(-10)
+        leftButton.top >> chartView.bottom.offset(10)
+        leftButton.width >> leftButton.height.at(0.5)
         leftButton.action = #selector(AppDelegate.leftButtonClicked)
         
         // zoom in/out buttons
-        let zoomInButton = NSButton()
+        let zoomInButton = mainView.addForAutoLayout(NSButton())
         zoomInButton.title = "> <"
-        mainView.addSubview(zoomInButton)
-        zoomInButton.autoPinEdge(.left, to: .right, of: leftButton)
-        zoomInButton.autoPinEdge(.top, to: .bottom, of: chartView, withOffset: 10)
-        zoomInButton.autoMatch(.width, to: .height, of: leftButton)
+        zoomInButton.left >> leftButton.right
+        zoomInButton.top >> chartView.bottom.offset(10)
+        zoomInButton.width >> leftButton.height
         zoomInButton.action = #selector(AppDelegate.zoomInButtonClicked)
         
-        let zoomOutButton = NSButton()
+        let zoomOutButton = mainView.addForAutoLayout(NSButton())
         zoomOutButton.title = "<   >"
-        mainView.addSubview(zoomOutButton)
-        zoomOutButton.autoPinEdge(.left, to: .right, of: leftButton)
-        zoomOutButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-        zoomOutButton.autoPinEdge(.top, to: .bottom, of: zoomInButton)
-        zoomOutButton.autoMatch(.width, to: .width, of: zoomInButton)
-        zoomOutButton.autoMatch(.height, to: .height, of: zoomInButton)
+        zoomOutButton.left >> leftButton.right
+        zoomOutButton >> mainView.bottom.offset(-10)
+        zoomOutButton.top >> zoomInButton.bottom
+        zoomOutButton >> zoomInButton.size
         zoomOutButton.action = #selector(AppDelegate.zoomOutButtonClicked)
         
         // right buttons
-        let rightButton = NSButton()
+        let rightButton = mainView.addForAutoLayout(NSButton())
         rightButton.title = ">"
-        mainView.addSubview(rightButton)
-        rightButton.autoPinEdge(.left, to: .right, of: zoomInButton)
-        rightButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-        rightButton.autoPinEdge(.top, to: .bottom, of: chartView, withOffset: 10)
-        rightButton.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
-        rightButton.autoMatch(.width, to: .height, of: leftButton, withMultiplier: 0.5)
+        rightButton.left >> zoomOutButton.right
+        rightButton >> mainView.bottom.offset(-10)
+        rightButton.top >> chartView.bottom.offset(10)
+        rightButton >> mainView.right.offset(-10)
+        rightButton.width >> leftButton.height.at(0.5)
         rightButton.action = #selector(AppDelegate.rightButtonClicked)
     }
     

@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		34E40249BDC5BB6E384FC9B4 /* Pods_StockToolz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AB1FDD77D1FB5783794635 /* Pods_StockToolz.framework */; };
 		70956189D82E0931BC7077A7 /* Pods_StockToolzTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F63F47D0051F5E865883E8 /* Pods_StockToolzTests.framework */; };
+		963CBD8B25277BC500FF4916 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 963CBD8A25277BC500FF4916 /* SwiftPackageProductDependency */; };
 		9E00549A1DC28AE800C784AF /* YahooCSVCrawler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0054991DC28AE800C784AF /* YahooCSVCrawler.swift */; };
 		9E5A9A161DC7F1BC0062FD04 /* MovingAverageTrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5A9A151DC7F1BC0062FD04 /* MovingAverageTrader.swift */; };
 		9E5B730B1DC6248E00155AF1 /* StockExchangeDataInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B730A1DC6248E00155AF1 /* StockExchangeDataInjector.swift */; };
@@ -76,6 +77,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34E40249BDC5BB6E384FC9B4 /* Pods_StockToolz.framework in Frameworks */,
+				963CBD8B25277BC500FF4916 /* BuildFile in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +224,9 @@
 			dependencies = (
 			);
 			name = StockToolz;
+			packageProductDependencies = (
+				963CBD8A25277BC500FF4916 /* SwiftPackageProductDependency */,
+			);
 			productName = StockToolz;
 			productReference = 9E6EEF9E1DC20B3300C228D0 /* StockToolz.app */;
 			productType = "com.apple.product-type.application";
@@ -278,6 +283,9 @@
 				Base,
 			);
 			mainGroup = 9E6EEF951DC20B3300C228D0;
+			packageReferences = (
+				963CBD8925277BC500FF4916 /* RemoteSwiftPackageReference */,
+			);
 			productRefGroup = 9E6EEF9F1DC20B3300C228D0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -349,15 +357,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-StockToolz/Pods-StockToolz-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StockToolz/Pods-StockToolz-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StockToolz/Pods-StockToolz-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -528,7 +533,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -542,7 +548,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
 				INFOPLIST_FILE = StockToolz/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.StockToolz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -558,7 +567,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
 				INFOPLIST_FILE = StockToolz/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.StockToolz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -574,7 +586,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
 				INFOPLIST_FILE = StockToolzTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.StockToolzTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -591,7 +607,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
 				INFOPLIST_FILE = StockToolzTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.StockToolzTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -630,6 +650,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		963CBD8925277BC500FF4916 /* RemoteSwiftPackageReference */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/flowtoolz/GetLaid.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		963CBD8A25277BC500FF4916 /* SwiftPackageProductDependency */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 963CBD8925277BC500FF4916 /* RemoteSwiftPackageReference */;
+			productName = GetLaid;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9E6EEF961DC20B3300C228D0 /* Project object */;
 }

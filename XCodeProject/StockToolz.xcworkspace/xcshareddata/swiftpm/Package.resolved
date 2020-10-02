@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "GetLaid",
+        "repositoryURL": "https://github.com/flowtoolz/GetLaid.git",
+        "state": {
+          "branch": "master",
+          "revision": "0a68303fcead0d8db1bf404e8b8bd141751495fb",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
