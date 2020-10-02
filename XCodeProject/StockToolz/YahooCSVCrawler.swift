@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 class YahooCSVCrawler
 {
@@ -37,13 +36,20 @@ class YahooCSVCrawler
     
     func saveHistoricStockDataToFileForTicker(_ ticker: String, directoryName: String)
     {
-        AF.request("https://ichart.finance.yahoo.com/table.csv?s=" + ticker + "&g=d").responseString
-        {
-            result in
-            
-            if let text = result.value
-            {
+        let urlString = "https://ichart.finance.yahoo.com/table.csv?s=" + ticker + "&g=d"
+        
+        guard let url = URL(string: urlString) else {
+            print("could not create url: \(urlString)")
+            return
+        }
+        
+        DispatchQueue.global().async {
+            do {
+                let text = try String(contentsOf: url)
                 self.saveTextToFile(text, fileName: directoryName + "/" + ticker + ".txt")
+            }
+            catch {
+                print(error.localizedDescription)
             }
         }
     }
