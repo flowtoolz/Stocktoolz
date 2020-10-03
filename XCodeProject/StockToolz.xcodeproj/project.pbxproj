@@ -161,7 +161,6 @@
 				9E6EEFA01DC20B3300C228D0 /* StockToolz */,
 				9E6EEFB01DC20B3300C228D0 /* StockToolzTests */,
 				9E6EEF9F1DC20B3300C228D0 /* Products */,
-				E13E38135A9949921F004FAF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -190,13 +189,6 @@
 				9E6EEFB31DC20B3300C228D0 /* Info.plist */,
 			);
 			path = StockToolzTests;
-			sourceTree = "<group>";
-		};
-		E13E38135A9949921F004FAF /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
